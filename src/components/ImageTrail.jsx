@@ -1116,6 +1116,7 @@ return (
                         backgroundImage: `linear-gradient(to bottom, rgba(255, 255, 255, 0) 80%, rgb(255, 255, 255) 100%), url(${backgroundImage})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
+                        zIndex: 0
                     }
                 : undefined
         }

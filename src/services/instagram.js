@@ -2,8 +2,7 @@
 
 const INSTAGRAM_MEDIA_URL =
   "https://graph.facebook.com/v22.0/17841468246347845/media";
-const ACCESS_TOKEN =
-  "EAAI5ehjnV5wBPM5Ps6vyOZBDHRH4h2J320wp6yKI9DNlCeZAhx7Y1O5gCWY69ZC4wwOO9RYoZCK20hFjGQiyZBHFbxln5FVLeK91LoGT5FnCWpBmFry8zUKx9g0wZAYj7dU5ODn9jbDTegrwcXyoZCDbFhyZAOOIz6TVCs61X9YNZCl6Uf6jYjEwxfqL5C1WsHw0FsZADYpKjLgbGcLDKBpW2LKosAYQR333EhSAZDZD";
+const ACCESS_TOKEN = "token";
 
 export async function fetchInstagramImages() {
   const url = `${INSTAGRAM_MEDIA_URL}?fields=id,caption,media_url,timestamp,media_type&access_token=${ACCESS_TOKEN}`;
