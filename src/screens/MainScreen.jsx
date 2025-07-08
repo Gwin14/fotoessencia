@@ -44,6 +44,9 @@ export default function MainScreen() {
         animationDuration={1}
         pauseBetweenAnimations={1.5}
       />
+      <section className="about">
+        
+      </section>
     </>
   );
 }
