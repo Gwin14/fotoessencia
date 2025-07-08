@@ -3,7 +3,6 @@ import ImageTrail from "../components/ImageTrail";
 import TrueFocus from "../components/TrueFocus";
 
 import { fetchInstagramImages } from "../services/instagram"; // importa a função
-import { transform } from "framer-motion";
 
 export default function MainScreen() {
   const [images, setImages] = useState([]);
@@ -20,7 +19,8 @@ export default function MainScreen() {
   return (
     <>
       <div
-        style={{ height: "500px", position: "relative", overflow: "hidden" }}
+        className="image-trail-content"
+        style={{ height: "40dvh", position: "relative", overflow: "hidden" }}
       >
         <ImageTrail
           items={
@@ -32,7 +32,7 @@ export default function MainScreen() {
                 ]
           }
           variant={1}
-          backgroundImage="https://scontent-ams4-1.cdninstagram.com/v/t39.30808-6/497700082_122162366318506495_6408172322433122039_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ccb=1-7&_nc_sid=18de74&_nc_ohc=K_xVPtAFec8Q7kNvwH3_s2P&_nc_oc=AdmKOtJY02cE70GTlCR_N6HG8YyP7q2jeRsbjiv2_3R0_Ljzj_0vNC6Ozcd3XHVn1C9kKkJ6BRxQmMAh8LrvxWlQ&_nc_zt=23&_nc_ht=scontent-ams4-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=F8231RJSdr-DtaZlVdnTig&oh=00_AfQQjUkL7_nncj24n0HZ8-z_4YYT_Si3SFSPD_p1TQeLog&oe=6871F32A"
+          backgroundImage="https://scontent-sea5-1.cdninstagram.com/v/t39.30808-6/492329036_122156301518506495_770398862162671498_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=110&ccb=1-7&_nc_sid=18de74&_nc_ohc=u-bZkDjTcZsQ7kNvwEXsvw9&_nc_oc=AdkYwvV1WUvBlOUJ9vpTqaFMpposIdRDHhwf6xp6jzzC17jFTAi--Qt-fYFjunq-Opo&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=SAba6EYM9F4uqht0Y8O04g&oh=00_AfSkseuZ3r-aHy-zpCAYP2nlSeGkl-MqYjAw6C6svJbN8A&oe=68730F3A"
         />
       </div>
 
@@ -43,7 +43,6 @@ export default function MainScreen() {
         borderColor="#D7A339"
         animationDuration={1}
         pauseBetweenAnimations={1.5}
-       
       />
     </>
   );
