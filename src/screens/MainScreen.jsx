@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import ImageTrail from "../components/ImageTrail";
 import TrueFocus from "../components/TrueFocus";
+import TiltedCard from "../components/TiltedCard";
 
 import { fetchInstagramImages } from "../services/instagram"; // importa a função
+import { fetchInstagramProfileInfo } from "../services/instagram"; // importa a função
 
 export default function MainScreen() {
   const [images, setImages] = useState([]);
+  const [profileInfo, setProfileInfo] = useState(null);
 
   useEffect(() => {
     const loadImages = async () => {
@@ -13,7 +16,13 @@ export default function MainScreen() {
       setImages(imgs);
     };
 
+    const loadProfleInfo = async () => {
+      const profile = await fetchInstagramProfileInfo();
+      setProfileInfo(profile);
+    };
+
     loadImages();
+    loadProfleInfo();
   }, []);
 
   return (
@@ -45,7 +54,23 @@ export default function MainScreen() {
         pauseBetweenAnimations={1.5}
       />
       <section className="about">
-        
+        <TiltedCard
+          imageSrc={profileInfo?.profilePicture}
+          altText="Foto Essência"
+          captionText="Foto Essência - Instagram"
+          containerHeight="300px"
+          containerWidth="300px"
+          imageHeight="300px"
+          imageWidth="300px"
+          rotateAmplitude={12}
+          scaleOnHover={1.2}
+          showMobileWarning={false}
+          showTooltip={true}
+          displayOverlayContent={true}
+          overlayContent={
+            <p className="tilted-card-demo-text">Foto Essência - Instagram</p>
+          }
+        />
       </section>
     </>
   );
