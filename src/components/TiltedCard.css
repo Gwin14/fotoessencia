@@ -48,6 +48,12 @@
   z-index: 2;
   will-change: transform;
   transform: translateZ(30px);
+  font-family: "Alfa Slab One", serif;
+  padding-left: 10px;
+  padding-right: 10px;
+  backdrop-filter: blur(10px);
+  color: antiquewhite;
+  border-radius: 15px;
 }
 
 .tilted-card-caption {

@@ -2,9 +2,16 @@ import React, { useEffect, useState } from "react";
 import ImageTrail from "../components/ImageTrail";
 import TrueFocus from "../components/TrueFocus";
 import TiltedCard from "../components/TiltedCard";
+import ScrambledText from "../components/ScrambledText";
+import CurvedLoop from "../components/CurvedLoop";
 
 import { fetchInstagramImages } from "../services/instagram"; // importa a função
 import { fetchInstagramProfileInfo } from "../services/instagram"; // importa a função
+
+import { FaInstagram, FaFacebook, FaEnvelope } from "react-icons/fa";
+import { SiThreads } from "react-icons/si"; // Threads está no pacote de ícones "simple-icons"
+
+import "./MainScreen.css"; // importa o CSS específico para este componente
 
 export default function MainScreen() {
   const [images, setImages] = useState([]);
@@ -71,7 +78,52 @@ export default function MainScreen() {
             <p className="tilted-card-demo-text">Foto Essência - Instagram</p>
           }
         />
+
+        <div className="bio">
+          {profileInfo?.bio && (
+            <ScrambledText
+              className="scrambled-text-demo"
+              radius={100}
+              duration={1.2}
+              speed={0.5}
+              scrambleChars="🌻"
+            >
+              {profileInfo.bio}
+            </ScrambledText>
+          )}
+          <div
+            className="social-icons"
+            style={{ display: "flex", gap: "1rem" }}
+          >
+            <a
+              href="https://www.instagram.com/fotoessencia_/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaInstagram size={24} color="#E4405F" />
+            </a>
+            <a
+              href="https://www.facebook.com/profile.php?id=61565194861450/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaFacebook size={24} color="#1877F2" />
+            </a>
+            <a
+              href="https://www.threads.net/@fotoessencia_/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <SiThreads size={24} color="#000" />
+            </a>
+            <a href="mailto:fotoessencia10@gmail.com">
+              <FaEnvelope size={24} color="#FF405F" />
+            </a>
+          </div>
+        </div>
       </section>
+
+      <CurvedLoop marqueeText="praias ✦ animais ✦ cidades ✦ momentos ✦ " />
     </>
   );
 }
