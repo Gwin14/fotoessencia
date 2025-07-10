@@ -5,6 +5,7 @@ import TiltedCard from "../components/TiltedCard";
 import ScrambledText from "../components/ScrambledText";
 import CurvedLoop from "../components/CurvedLoop";
 import ChromaGrid from "../components/ChromaGrid";
+import CircularGallery from "../components/CircularGallery";
 
 import { items } from "../data/photoLocations"; // importa os itens do ChromaGrid
 
@@ -54,7 +55,6 @@ export default function MainScreen() {
           backgroundImage="https://scontent-sea5-1.cdninstagram.com/v/t39.30808-6/492329036_122156301518506495_770398862162671498_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=110&ccb=1-7&_nc_sid=18de74&_nc_ohc=u-bZkDjTcZsQ7kNvwEXsvw9&_nc_oc=AdkYwvV1WUvBlOUJ9vpTqaFMpposIdRDHhwf6xp6jzzC17jFTAi--Qt-fYFjunq-Opo&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=SAba6EYM9F4uqht0Y8O04g&oh=00_AfSkseuZ3r-aHy-zpCAYP2nlSeGkl-MqYjAw6C6svJbN8A&oe=68730F3A"
         />
       </div>
-
       <TrueFocus
         sentence="Foto Essência"
         manualMode={false}
@@ -125,7 +125,6 @@ export default function MainScreen() {
           </div>
         </div>
       </section>
-
       <CurvedLoop
         marqueeText="praias ✦ animais ✦ cidades ✦ momentos ✦ "
         speed={3}
@@ -134,16 +133,28 @@ export default function MainScreen() {
         interactive={true}
         className="custom-text-style"
       />
-
       <h2 className="topic-title">Vários locais</h2>
-
-      <div style={{ height: "600px", position: "relative" }}>
+      <div style={{ position: "relative" }}>
         <ChromaGrid
           items={items}
           radius={300}
           damping={0.45}
           fadeOut={0.6}
           ease="power3.out"
+        />
+      </div>
+
+      <h2 className="topic-title" style={{ marginTop: 200, marginBottom: -30 }}>
+        Fotos, Vídeos,
+      </h2>
+      <h2 className="topic-title">Histórias, Momentos</h2>
+
+      <div style={{ height: "600px", position: "relative" }}>
+        <CircularGallery
+          bend={3}
+          textColor="#ffffff"
+          borderRadius={0.05}
+          scrollEase={0.02}
         />
       </div>
     </>

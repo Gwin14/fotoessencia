@@ -1,7 +1,7 @@
 .chroma-grid {
   position: relative;
   width: 80vw;
- 
+  height: auto; /* Altere para auto */
   display: grid;
   grid-template-columns: repeat(var(--cols, 3), 320px);
   grid-auto-rows: auto;
@@ -17,13 +17,11 @@
   --r: 220px;
 }
 
-
-  .chroma-grid {
-    grid-template-columns: repeat(auto-fit, minmax(320px, 320px));
-    gap: 0.5rem;
-    padding: 0.5rem;
-  }
-
+.chroma-grid {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 320px));
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
 
 @media (max-width: 480px) {
   .chroma-grid {
@@ -48,7 +46,6 @@
   --mouse-x: 50%;
   --mouse-y: 50%;
   --spotlight-color: rgba(255, 255, 255, 0.3);
-
 }
 
 .chroma-card:hover {
@@ -114,8 +111,8 @@
   inset: 0;
   pointer-events: none;
   z-index: 3;
-  backdrop-filter: grayscale(1) ;
-  -webkit-backdrop-filter: grayscale(1) ;
+  backdrop-filter: grayscale(1);
+  -webkit-backdrop-filter: grayscale(1);
   background: rgba(0, 0, 0, 0.001);
 
   mask-image: radial-gradient(

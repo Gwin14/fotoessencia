@@ -5,27 +5,47 @@ const INSTAGRAM_PROFILE_URL =
 
 const ACCESS_TOKEN = import.meta.env.VITE_INSTAGRAM_ACCESS_TOKEN;
 
-// Busca imagens do Instagram
+// Busca imagens do Instagram com paginação
 export async function fetchInstagramImages() {
-  const url = `${INSTAGRAM_MEDIA_URL}?fields=id,caption,media_url,timestamp,media_type&access_token=${ACCESS_TOKEN}`;
+  let allImages = [];
+  let nextUrl = `${INSTAGRAM_MEDIA_URL}?fields=id,caption,media_url,timestamp,media_type,thumbnail_url&access_token=${ACCESS_TOKEN}&limit=100`;
 
   try {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error("Erro ao buscar imagens do Instagram");
-    const data = await response.json();
+    while (nextUrl) {
+      const response = await fetch(nextUrl);
+      if (!response.ok) throw new Error("Erro ao buscar imagens do Instagram");
+      const data = await response.json();
 
-    // filtra apenas imagens (media_type === "IMAGE")
-    const images = data.data.filter((item) => item.media_type === "IMAGE");
+      // Processa os dados recebidos
+      const items = data.data.map((item) => {
+        // Para vídeos, usa a thumbnail_url se disponível, caso contrário media_url
+        if (
+          item.media_type === "VIDEO" ||
+          item.media_type === "CAROUSEL_ALBUM"
+        ) {
+          return {
+            ...item,
+            display_url: item.thumbnail_url || item.media_url,
+          };
+        }
+        return item;
+      });
 
-    // retorna array com URLs das imagens
-    return images.map((img) => img.media_url);
+      allImages = [...allImages, ...items];
+      nextUrl = data.paging?.next || null;
+    }
+
+    // Filtra apenas imagens e retorna seus URLs
+    return allImages
+      .filter((item) => item.media_type === "IMAGE")
+      .map((img) => img.media_url);
   } catch (error) {
     console.error("Erro ao buscar imagens:", error);
     return []; // retorna array vazio em caso de erro
   }
 }
 
-// Busca informações do perfil do Instagram
+// Busca informações do perfil do Instagram (mantido igual)
 export async function fetchInstagramProfileInfo() {
   const fields = "profile_picture_url,biography,followers_count,media_count";
   const url = `${INSTAGRAM_PROFILE_URL}?fields=${fields}&access_token=${ACCESS_TOKEN}`;

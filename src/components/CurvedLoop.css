@@ -7,6 +7,8 @@
   transform: translateY(-25vw);
   margin-bottom: -40vw;
   pointer-events: none;
+  z-index: -10;
+  
 }
 
 .curved-loop-svg {
