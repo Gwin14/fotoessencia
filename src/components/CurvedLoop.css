@@ -4,7 +4,8 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  transform: translateY(-50%);
+  transform: translateY(-25vw);
+  margin-bottom: -40vw;
   pointer-events: none;
 }
 
@@ -20,4 +21,11 @@
   letter-spacing: 5px;
   text-transform: uppercase;
   line-height: 1;
+}
+
+@media screen and (max-width: 1000px) {
+  .curved-loop-jacket {
+    margin-top: -200px;
+    margin-bottom: -500px;
+  }
 }

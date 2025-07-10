@@ -17,6 +17,15 @@
   padding: 7vw;
 }
 
+.topic-title {
+  font-size: 4rem;
+  font-family: "Alfa Slab One", serif;
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
+  width: 100vw;
+}
+
 @media (max-width: 1000px) {
   .about {
     width: 95%;

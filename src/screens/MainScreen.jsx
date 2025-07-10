@@ -4,6 +4,9 @@ import TrueFocus from "../components/TrueFocus";
 import TiltedCard from "../components/TiltedCard";
 import ScrambledText from "../components/ScrambledText";
 import CurvedLoop from "../components/CurvedLoop";
+import ChromaGrid from "../components/ChromaGrid";
+
+import { items } from "../data/photoLocations"; // importa os itens do ChromaGrid
 
 import { fetchInstagramImages } from "../services/instagram"; // importa a função
 import { fetchInstagramProfileInfo } from "../services/instagram"; // importa a função
@@ -123,7 +126,26 @@ export default function MainScreen() {
         </div>
       </section>
 
-      <CurvedLoop marqueeText="praias ✦ animais ✦ cidades ✦ momentos ✦ " />
+      <CurvedLoop
+        marqueeText="praias ✦ animais ✦ cidades ✦ momentos ✦ "
+        speed={3}
+        curveAmount={300}
+        direction="right"
+        interactive={true}
+        className="custom-text-style"
+      />
+
+      <h2 className="topic-title">Vários locais</h2>
+
+      <div style={{ height: "600px", position: "relative" }}>
+        <ChromaGrid
+          items={items}
+          radius={300}
+          damping={0.45}
+          fadeOut={0.6}
+          ease="power3.out"
+        />
+      </div>
     </>
   );
 }
