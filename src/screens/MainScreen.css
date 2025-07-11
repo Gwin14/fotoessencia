@@ -62,6 +62,20 @@
 
   .bio {
     padding: 2vw;
-    font-size: 1rem;
+    font-size: 0.4rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .topic-title {
+    font-size: 2em;
+  }
+
+  .count-up-container {
+    flex-direction: column;
+  }
+
+  .count-group {
+    margin-bottom: 50px;
   }
 }
