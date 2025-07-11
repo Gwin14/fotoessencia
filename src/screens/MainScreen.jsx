@@ -164,7 +164,7 @@ export default function MainScreen() {
 
       <div style={{ height: "600px", position: "relative" }}>
         <CircularGallery
-          bend={3}
+          bend={window.innerWidth < 600 ? 0 : 3}
           textColor="#ffffff"
           borderRadius={0.05}
           scrollEase={0.02}
