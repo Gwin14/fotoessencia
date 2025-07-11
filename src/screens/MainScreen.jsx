@@ -8,11 +8,15 @@ import ChromaGrid from "../components/ChromaGrid";
 import CircularGallery from "../components/CircularGallery";
 import CountUp from "../components/CountUp";
 import GradientText from "../components/GradientText";
+import AnimatedContent from "../components/AnimatedContent";
 
 import { items } from "../data/photoLocations"; // importa os itens do ChromaGrid
 
-import { fetchInstagramImages } from "../services/instagram"; // importa a função
-import { fetchInstagramProfileInfo } from "../services/instagram"; // importa a função
+import {
+  fetchInstagramImages,
+  fetchInstagramMedia,
+  fetchInstagramProfileInfo,
+} from "../services/instagram"; // importa a função
 
 import { FaInstagram, FaFacebook, FaEnvelope } from "react-icons/fa";
 import { SiThreads } from "react-icons/si"; // Threads está no pacote de ícones "simple-icons"
@@ -22,11 +26,17 @@ import "./MainScreen.css"; // importa o CSS específico para este componente
 export default function MainScreen() {
   const [images, setImages] = useState([]);
   const [profileInfo, setProfileInfo] = useState(null);
+  const [media, setMedia] = useState([]);
 
   useEffect(() => {
     const loadImages = async () => {
       const imgs = await fetchInstagramImages();
       setImages(imgs);
+    };
+
+    const loadMedia = async () => {
+      const imgs = await fetchInstagramMedia();
+      setMedia(imgs);
     };
 
     const loadProfleInfo = async () => {
@@ -36,6 +46,7 @@ export default function MainScreen() {
 
     loadImages();
     loadProfleInfo();
+    loadMedia();
   }, []);
 
   return (
@@ -206,6 +217,88 @@ export default function MainScreen() {
           </GradientText>
         </div>
       </section>
+
+      <h2 className="topic-title" style={{ marginTop: 200, marginBottom: -30 }}>
+        Conheça todo
+      </h2>
+      <h2 className="topic-title" style={{ marginBottom: 100 }}>
+        o conteúdo
+      </h2>
+
+      <div>
+        {media && media.length > 0 ? (
+          <div
+            style={{
+              width: "80vw",
+              margin: "auto",
+              columnWidth: 300,
+              columnGap: 16,
+            }}
+          >
+            {media.map((item, idx) => {
+              if (item.media_type === "VIDEO") {
+                return (
+                  <AnimatedContent
+                    distance={150}
+                    direction="horizontal"
+                    reverse={false}
+                    duration={1.2}
+                    ease="bounce.out"
+                    initialOpacity={0.2}
+                    animateOpacity
+                    scale={1.1}
+                    threshold={0.2}
+                    delay={0.3}
+                  >
+                    <video
+                      key={idx}
+                      src={item.media_url}
+                      controls
+                      style={{
+                        width: "100%",
+                        borderRadius: 12,
+                        marginBottom: 12,
+                        display: "block",
+                      }}
+                    />
+                  </AnimatedContent>
+                );
+              }
+
+              return (
+                <AnimatedContent
+                  distance={150}
+                  direction="vertical"
+                  reverse={false}
+                  duration={1.2}
+                  ease="power3.out"
+                  initialOpacity={0.2}
+                  animateOpacity
+                  scale={1.1}
+                  threshold={0}
+                  delay={0.3}
+                >
+                  <img
+                    key={idx}
+                    src={item.media_url}
+                    alt={`Instagram ${idx}`}
+                    loading="lazy"
+                    style={{
+                      width: "100%",
+                      objectFit: "cover",
+                      borderRadius: 12,
+                      marginBottom: 12,
+                      display: "block",
+                    }}
+                  />
+                </AnimatedContent>
+              );
+            })}
+          </div>
+        ) : (
+          <p>Nenhuma imagem carregada do Instagram.</p>
+        )}
+      </div>
     </>
   );
 }

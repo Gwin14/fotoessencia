@@ -66,3 +66,36 @@ export async function fetchInstagramProfileInfo() {
     return null;
   }
 }
+
+// Busca imagens do Instagram com paginação
+export async function fetchInstagramMedia() {
+  let allItems = [];
+  let nextUrl = `${INSTAGRAM_MEDIA_URL}?fields=id,caption,media_url,timestamp,media_type,thumbnail_url&access_token=${ACCESS_TOKEN}&limit=100`;
+
+  try {
+    while (nextUrl) {
+      const response = await fetch(nextUrl);
+      if (!response.ok) throw new Error("Erro ao buscar imagens do Instagram");
+      const data = await response.json();
+
+      const items = data.data.map((item) => {
+        const display_url = item.thumbnail_url || item.media_url;
+        return {
+          id: item.id,
+          caption: item.caption,
+          media_type: item.media_type,
+          display_url,
+          media_url: item.media_url,
+        };
+      });
+
+      allItems = [...allItems, ...items];
+      nextUrl = data.paging?.next || null;
+    }
+
+    return allItems;
+  } catch (error) {
+    console.error("Erro ao buscar imagens:", error);
+    return [];
+  }
+}
