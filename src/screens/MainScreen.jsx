@@ -6,6 +6,8 @@ import ScrambledText from "../components/ScrambledText";
 import CurvedLoop from "../components/CurvedLoop";
 import ChromaGrid from "../components/ChromaGrid";
 import CircularGallery from "../components/CircularGallery";
+import CountUp from "../components/CountUp";
+import GradientText from "../components/GradientText";
 
 import { items } from "../data/photoLocations"; // importa os itens do ChromaGrid
 
@@ -157,6 +159,53 @@ export default function MainScreen() {
           scrollEase={0.02}
         />
       </div>
+
+      <h2 className="topic-title" style={{ marginTop: 200, marginBottom: -30 }}>
+        Cada dia
+      </h2>
+      <h2 className="topic-title" style={{ marginBottom: 100 }}>
+        crescendo mais
+      </h2>
+
+      <section className="count-up-container">
+        <div className="count-group">
+          <h3 className="count-title">Seguidores</h3>
+          <GradientText
+            colors={["#FFD700", "#FFC600", "#FFB900", "#FFAA00", "#FF9E00"]}
+            animationSpeed={3}
+            showBorder={false}
+            className="custom-class"
+          >
+            <CountUp
+              from={0}
+              to={profileInfo?.followers || 0}
+              separator=","
+              direction="up"
+              duration={1}
+              className="count-up-text"
+            />
+          </GradientText>
+        </div>
+
+        <div className="count-group">
+          <h3 className="count-title">Mídia total</h3>
+          <GradientText
+            colors={["#FFD700", "#FFC600", "#FFB900", "#FFAA00", "#FF9E00"]}
+            animationSpeed={3}
+            showBorder={false}
+            className="custom-class"
+          >
+            <CountUp
+              from={0}
+              to={profileInfo?.mediaCount || 0}
+              separator=","
+              direction="up"
+              duration={1}
+              className="count-up-text"
+            />
+          </GradientText>
+        </div>
+      </section>
     </>
   );
 }
