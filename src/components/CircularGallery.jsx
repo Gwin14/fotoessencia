@@ -10,18 +10,18 @@ import {
 import { useEffect, useRef } from "react";
 
 import "./CircularGallery.css";
-import arte from "../assets/images/arte.jpg";
-import aventuras from "../assets/images/aventuras.jpg";
-import cores from "../assets/images/cores.jpg";
-import cultura from "../assets/images/cultura.JPG";
-import expressao from "../assets/images/expressao.jpg";
-import historias from "../assets/images/historias.jpg";
-import momentos from "../assets/images/momentos.JPG";
-import perspectiva from "../assets/images/perspectiva.jpg";
-import segredos from "../assets/images/segredos.jpg";
-import sentimentos from "../assets/images/sentimentos.jpg";
-import viajens from "../assets/images/viajens.JPG";
-import vida from "../assets/images/vida.jpg";
+import arte from "../assets/image/arte.jpg";
+import aventuras from "../assets/image/aventuras.jpg";
+import cores from "../assets/image/cores.jpg";
+import cultura from "../assets/image/cultura.jpg";
+import expressao from "../assets/image/expressao.jpg";
+import historias from "../assets/image/historias.jpg";
+import momentos from "../assets/image/momentos.jpg";
+import perspectiva from "../assets/image/perspectiva.jpg";
+import segredos from "../assets/image/segredos.jpg";
+import sentimentos from "../assets/image/sentimentos.jpg";
+import viajens from "../assets/image/viajens.jpg";
+import vida from "../assets/image/vida.jpg";
 
 function debounce(func, wait) {
   let timeout;
