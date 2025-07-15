@@ -22,7 +22,7 @@ import { FaInstagram, FaFacebook, FaEnvelope } from "react-icons/fa";
 import { SiThreads } from "react-icons/si"; // Threads está no pacote de ícones "simple-icons"
 
 import "./MainScreen.css"; // importa o CSS específico para este componente
-import barcoCapa from "../assets/images/barcoCapa.jpg"; // ajuste o caminho e extensão conforme necessário
+import barcoCapa from "../assets/image/barcoCapa.jpg"; // ajuste o caminho e extensão conforme necessário
 
 export default function MainScreen() {
   const [images, setImages] = useState([]);
