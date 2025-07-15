@@ -10,6 +10,18 @@ import {
 import { useEffect, useRef } from "react";
 
 import "./CircularGallery.css";
+import arte from "../assets/images/arte.jpg";
+import aventuras from "../assets/images/aventuras.jpg";
+import cores from "../assets/images/cores.jpg";
+import cultura from "../assets/images/cultura.JPG";
+import expressao from "../assets/images/expressao.jpg";
+import historias from "../assets/images/historias.jpg";
+import momentos from "../assets/images/momentos.JPG";
+import perspectiva from "../assets/images/perspectiva.jpg";
+import segredos from "../assets/images/segredos.jpg";
+import sentimentos from "../assets/images/sentimentos.jpg";
+import viajens from "../assets/images/viajens.JPG";
+import vida from "../assets/images/vida.jpg";
 
 function debounce(func, wait) {
   let timeout;
@@ -364,51 +376,51 @@ class App {
   createMedias(items, bend = 1, textColor, borderRadius, font) {
     const defaultItems = [
       {
-        image: `https://scontent-gru2-2.cdninstagram.com/v/t51.75761-15/504253021_17886443538274879_6533502630234172404_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&ccb=1-7&_nc_sid=18de74&_nc_ohc=hgYZVNkqHFcQ7kNvwGh9H4H&_nc_oc=AdnYSl79zOse6KTjys6QXgfz7N5ftBGUwb2XDvKCo3sFiBBcmrYaq-g_ZCuBg7DO4Pg&_nc_zt=23&_nc_ht=scontent-gru2-2.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=NjVCPasbLURzsU8NoFXI0g&oh=00_AfSnDA5cSrYhi6_N6WWelUfmNig9VnUt986gwn2egn2IMQ&oe=6875F620`,
+        image: vida,
         text: "Vida",
       },
       {
-        image: `https://scontent-gru2-1.cdninstagram.com/v/t39.30808-6/499930506_122162367416506495_6158073018275670106_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ccb=1-7&_nc_sid=18de74&_nc_ohc=l1aP6uNLDEcQ7kNvwErzn0i&_nc_oc=AdnY4J_KtbliXPo7eVZJase0KeJjU0XzdxM4PhKrVM19EpM4UIk6G_XEBkfTQD7hxA0&_nc_zt=23&_nc_ht=scontent-gru2-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=NjVCPasbLURzsU8NoFXI0g&oh=00_AfTS0PcZlSuWQi6zgDR_-5kenmnpoKVLih2wq0aOO-T1_g&oe=68760423`,
+        image: viajens,
         text: "Viajens",
       },
       {
-        image: `https://scontent-gru2-1.cdninstagram.com/v/t39.30808-6/497700082_122162366318506495_6408172322433122039_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ccb=1-7&_nc_sid=18de74&_nc_ohc=ngCVKJemNKwQ7kNvwFfdMuh&_nc_oc=Adkjg4_gfa-oD4tJb57L8DsfrOGI9IzCjeAH4IZe1MPUOdXYgX0oSjwIfDHZruxQeCA&_nc_zt=23&_nc_ht=scontent-gru2-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=NjVCPasbLURzsU8NoFXI0g&oh=00_AfQZT5VNM45yVxfj9Lr7VyVnXeLPsqMvcFA7hmDdwuogXQ&oe=68761FEA`,
+        image: momentos,
         text: "Momentos",
       },
       {
-        image: `https://scontent-gru2-1.cdninstagram.com/v/t39.30808-6/486746747_122151791270506495_7723525962569739160_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=107&ccb=1-7&_nc_sid=18de74&_nc_ohc=yFpssA7H8QcQ7kNvwHECzKj&_nc_oc=AdnQkQhRxD76QcPY-h5i_jzkyj2UINkXglcxioO2pOzh4lQ_qiOjlqqPxpJ5mMt__0c&_nc_zt=23&_nc_ht=scontent-gru2-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=NjVCPasbLURzsU8NoFXI0g&oh=00_AfR80wfmX3tuK5H5iAdN3zihbR7chpvpgevkD_ueJDCvlA&oe=6876070B`,
+        image: cultura,
         text: "Cultura",
       },
       {
-        image: `https://scontent-gru1-2.cdninstagram.com/v/t39.30808-6/483651687_122148455426506495_5172841116848340761_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=103&ccb=1-7&_nc_sid=18de74&_nc_ohc=gDAXqq3bXjQQ7kNvwF440co&_nc_oc=AdkcJwfxlQU78oYAwefCoTYwUZK0uwaIXeMIu7G4ZVy8StIFoq3qlbq2V611QmlW9kE&_nc_zt=23&_nc_ht=scontent-gru1-2.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=NjVCPasbLURzsU8NoFXI0g&oh=00_AfRZIp27YBhSoIxIkbtHrL18bqWOy5kuCSyKAZz2w5z9jA&oe=68761C6A`,
+        image: arte,
         text: "Arte",
       },
       {
-        image: `https://scontent-gru2-2.cdninstagram.com/v/t39.30808-6/481771144_122145599132506495_1943434319551853288_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&ccb=1-7&_nc_sid=18de74&_nc_ohc=_hMfNdKfqbQQ7kNvwFL0OkM&_nc_oc=AdnOTrpUOJCSdvreYzvL44E7l72iyCMCpwD_wGCN9KVREAViZSpW06aaqreQLG6TNI8&_nc_zt=23&_nc_ht=scontent-gru2-2.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=NjVCPasbLURzsU8NoFXI0g&oh=00_AfS8hMRSJfZPabU41Iiv0ukqrt4Ksa-ioZIZHuPdyP78rw&oe=6875F145`,
+        image: segredos,
         text: "Segredos",
       },
       {
-        image: `https://scontent-gru1-1.cdninstagram.com/v/t39.30808-6/475440251_122139455372506495_9122478657641102603_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&ccb=1-7&_nc_sid=18de74&_nc_ohc=we9RT4KXA3MQ7kNvwHFAADn&_nc_oc=Adm2b8FfF9U5twYWnorumWVwwwmMGr4jTzvvrpi0SGLw5zFy9X-QUIg60SrGuLRaCoA&_nc_zt=23&_nc_ht=scontent-gru1-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=NjVCPasbLURzsU8NoFXI0g&oh=00_AfT0Ym1VPRIbgxX249Za2mor2xWE2DP-0PQFmPEQf-MRYg&oe=68761213`,
+        image: expressao,
         text: "Expressão",
       },
       {
-        image: `https://scontent-gru2-2.cdninstagram.com/v/t39.30808-6/470160370_122129967398506495_2134047396680411146_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=102&ccb=1-7&_nc_sid=18de74&_nc_ohc=wx1tKI5L3uEQ7kNvwG4inGZ&_nc_oc=AdkhcwcHnlywxIqhP0OHEF_akHtmzVnd2Fk0QpMa-oNdIK5eCcyLNrHi3RffeTu4Yz0&_nc_zt=23&_nc_ht=scontent-gru2-2.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=NjVCPasbLURzsU8NoFXI0g&oh=00_AfTWy5Mh9V0E-NDuvAwLA4tD-1XkuoWakey-yDb2IWnAJg&oe=6875F360`,
+        image: sentimentos,
         text: "Sentimentos",
       },
       {
-        image: `https://scontent-gru2-1.cdninstagram.com/v/t39.30808-6/470232337_122131576208506495_6461297611262040642_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=109&ccb=1-7&_nc_sid=18de74&_nc_ohc=sOLy6DNbzAUQ7kNvwHkWMBk&_nc_oc=AdkU1j7Mw_nKSeHN-lXMewYg6yVLgNvRpKQ3temvpYhq_mhbxeZvHcplGv8xkGF7E5s&_nc_zt=23&_nc_ht=scontent-gru2-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=NjVCPasbLURzsU8NoFXI0g&oh=00_AfQRNpdbGZLSBcdaVzbm9H3phJuw7OywcKDUcMGQq5HCXg&oe=68761A6B`,
+        image: perspectiva,
         text: "Perspectiva",
       },
       {
-        image: `https://scontent-gru2-1.cdninstagram.com/v/t39.30808-6/470139212_122129954594506495_541141891755545800_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=109&ccb=1-7&_nc_sid=18de74&_nc_ohc=PY8OxmiAcOcQ7kNvwFvcbCJ&_nc_oc=AdnsFRKavyA2kRLK1lSqRH69n5i1_A3hCppcknrDVlN6P9nfgA3nQwrstylHKD7V3H0&_nc_zt=23&_nc_ht=scontent-gru2-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=NjVCPasbLURzsU8NoFXI0g&oh=00_AfR0PCnOfm9bhJQQ_xM7po7J7BRPypsjaGZ042E30InGSQ&oe=6875FDE5`,
+        image: cores,
         text: "Cores",
       },
       {
-        image: `https://scontent-gru1-2.cdninstagram.com/v/t39.30808-6/469840482_122129237900506495_2264446898146135321_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&ccb=1-7&_nc_sid=18de74&_nc_ohc=0tNq_RSP2lcQ7kNvwEUY8vd&_nc_oc=AdkZfna-n4_aqkvzxtbA3wpve_oTjxCPGrAMxyv962GMpit1nr9iLJLb-VGjV7ljlJM&_nc_zt=23&_nc_ht=scontent-gru1-2.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=NjVCPasbLURzsU8NoFXI0g&oh=00_AfS_LxrO3fjTDopakSXK9sbKNRrLMJgCfx1Zxfg2XNEYvA&oe=68761BAB`,
+        image: historias,
         text: "Histórias",
       },
       {
-        image: `https://scontent-gru2-2.cdninstagram.com/v/t39.30808-6/469399879_122128598480506495_745891567318763659_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=106&ccb=1-7&_nc_sid=18de74&_nc_ohc=oCZ2XTNufZQQ7kNvwFqjuHG&_nc_oc=AdlqlDmnjN7ysk84QPS4XlBDZs0z4UUEr2VZhDQuwCIYzs57sGHrdmYQVW8umF0RWvw&_nc_zt=23&_nc_ht=scontent-gru2-2.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=NjVCPasbLURzsU8NoFXI0g&oh=00_AfQ1jrpfm60qxAVI4-BNCmbiQLiNBZUmnJRVudbCdywkzQ&oe=6876007D`,
+        image: aventuras,
         text: "Aventuras",
       },
     ];

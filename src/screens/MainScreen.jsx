@@ -22,6 +22,7 @@ import { FaInstagram, FaFacebook, FaEnvelope } from "react-icons/fa";
 import { SiThreads } from "react-icons/si"; // Threads está no pacote de ícones "simple-icons"
 
 import "./MainScreen.css"; // importa o CSS específico para este componente
+import barcoCapa from "../assets/images/barcoCapa.jpg"; // ajuste o caminho e extensão conforme necessário
 
 export default function MainScreen() {
   const [images, setImages] = useState([]);
@@ -65,7 +66,7 @@ export default function MainScreen() {
                 ]
           }
           variant={1}
-          backgroundImage="https://scontent-sea5-1.cdninstagram.com/v/t39.30808-6/492329036_122156301518506495_770398862162671498_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=110&ccb=1-7&_nc_sid=18de74&_nc_ohc=u-bZkDjTcZsQ7kNvwEXsvw9&_nc_oc=AdkYwvV1WUvBlOUJ9vpTqaFMpposIdRDHhwf6xp6jzzC17jFTAi--Qt-fYFjunq-Opo&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=SAba6EYM9F4uqht0Y8O04g&oh=00_AfSkseuZ3r-aHy-zpCAYP2nlSeGkl-MqYjAw6C6svJbN8A&oe=68730F3A"
+          backgroundImage={barcoCapa}
         />
       </div>
       <TrueFocus
