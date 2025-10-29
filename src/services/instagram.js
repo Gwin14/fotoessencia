@@ -5,48 +5,44 @@ const INSTAGRAM_PROFILE_URL =
 
 const ACCESS_TOKEN = import.meta.env.VITE_INSTAGRAM_ACCESS_TOKEN;
 
-// Busca imagens do Instagram com paginação
+// Cache para evitar requisições duplicadas
+const cache = {
+  images: null,
+  media: null,
+  profile: null,
+  timestamp: null,
+};
+
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutos
+
+// Busca todas as imagens (sem limite)
 export async function fetchInstagramImages() {
-  let allImages = [];
-  let nextUrl = `${INSTAGRAM_MEDIA_URL}?fields=id,caption,media_url,timestamp,media_type,thumbnail_url&access_token=${ACCESS_TOKEN}&limit=100`;
+  if (cache.images && Date.now() - cache.timestamp < CACHE_DURATION) {
+    return cache.images;
+  }
 
   try {
-    while (nextUrl) {
-      const response = await fetch(nextUrl);
-      if (!response.ok) throw new Error("Erro ao buscar imagens do Instagram");
-      const data = await response.json();
-
-      // Processa os dados recebidos
-      const items = data.data.map((item) => {
-        // Para vídeos, usa a thumbnail_url se disponível, caso contrário media_url
-        if (
-          item.media_type === "VIDEO" ||
-          item.media_type === "CAROUSEL_ALBUM"
-        ) {
-          return {
-            ...item,
-            display_url: item.thumbnail_url || item.media_url,
-          };
-        }
-        return item;
-      });
-
-      allImages = [...allImages, ...items];
-      nextUrl = data.paging?.next || null;
-    }
-
-    // Filtra apenas imagens e retorna seus URLs
-    return allImages
+    const allMedia = await fetchAllInstagramMedia();
+    const images = allMedia
       .filter((item) => item.media_type === "IMAGE")
       .map((img) => img.media_url);
+
+    cache.images = images;
+    cache.timestamp = Date.now();
+
+    return images;
   } catch (error) {
     console.error("Erro ao buscar imagens:", error);
-    return []; // retorna array vazio em caso de erro
+    return [];
   }
 }
 
-// Busca informações do perfil do Instagram (mantido igual)
+// Busca informações do perfil com cache
 export async function fetchInstagramProfileInfo() {
+  if (cache.profile && Date.now() - cache.timestamp < CACHE_DURATION) {
+    return cache.profile;
+  }
+
   const fields = "profile_picture_url,biography,followers_count,media_count";
   const url = `${INSTAGRAM_PROFILE_URL}?fields=${fields}&access_token=${ACCESS_TOKEN}`;
 
@@ -55,47 +51,59 @@ export async function fetchInstagramProfileInfo() {
     if (!response.ok) throw new Error("Erro ao buscar informações do perfil");
     const data = await response.json();
 
-    return {
+    const profileData = {
       profilePicture: data.profile_picture_url,
       bio: data.biography,
       followers: data.followers_count,
       mediaCount: data.media_count,
     };
+
+    cache.profile = profileData;
+    return profileData;
   } catch (error) {
     console.error("Erro ao buscar informações do perfil:", error);
     return null;
   }
 }
 
-// Busca imagens do Instagram com paginação
+// Função para buscar TODA a mídia sem paginação
 export async function fetchInstagramMedia() {
-  let allItems = [];
-  let nextUrl = `${INSTAGRAM_MEDIA_URL}?fields=id,caption,media_url,timestamp,media_type,thumbnail_url&access_token=${ACCESS_TOKEN}&limit=100`;
+  if (cache.media && Date.now() - cache.timestamp < CACHE_DURATION) {
+    return cache.media;
+  }
 
   try {
-    while (nextUrl) {
-      const response = await fetch(nextUrl);
-      if (!response.ok) throw new Error("Erro ao buscar imagens do Instagram");
-      const data = await response.json();
-
-      const items = data.data.map((item) => {
-        const display_url = item.thumbnail_url || item.media_url;
-        return {
-          id: item.id,
-          caption: item.caption,
-          media_type: item.media_type,
-          display_url,
-          media_url: item.media_url,
-        };
-      });
-
-      allItems = [...allItems, ...items];
-      nextUrl = data.paging?.next || null;
-    }
-
-    return allItems;
+    const allMedia = await fetchAllInstagramMedia();
+    cache.media = allMedia;
+    cache.timestamp = Date.now();
+    return allMedia;
   } catch (error) {
-    console.error("Erro ao buscar imagens:", error);
+    console.error("Erro ao buscar mídia:", error);
     return [];
   }
+}
+
+// Função auxiliar para percorrer todas as páginas da API
+async function fetchAllInstagramMedia() {
+  let allItems = [];
+  let nextUrl = `${INSTAGRAM_MEDIA_URL}?fields=id,caption,media_url,media_type,thumbnail_url&access_token=${ACCESS_TOKEN}&limit=100`;
+
+  while (nextUrl) {
+    const response = await fetch(nextUrl);
+    if (!response.ok) throw new Error("Erro ao buscar mídia do Instagram");
+
+    const data = await response.json();
+    const items = data.data.map((item) => ({
+      id: item.id,
+      caption: item.caption,
+      media_type: item.media_type,
+      display_url: item.thumbnail_url || item.media_url,
+      media_url: item.media_url,
+    }));
+
+    allItems.push(...items);
+    nextUrl = data.paging?.next || null;
+  }
+
+  return allItems;
 }

@@ -1,54 +1,67 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, Suspense } from "react";
 import ImageTrail from "../components/ImageTrail";
 import TrueFocus from "../components/TrueFocus";
 import TiltedCard from "../components/TiltedCard";
 import ScrambledText from "../components/ScrambledText";
 import CurvedLoop from "../components/CurvedLoop";
-import ChromaGrid from "../components/ChromaGrid";
-import CircularGallery from "../components/CircularGallery";
 import CountUp from "../components/CountUp";
 import GradientText from "../components/GradientText";
 import AnimatedContent from "../components/AnimatedContent";
 
-import { items } from "../data/photoLocations"; // importa os itens do ChromaGrid
+import { items } from "../data/photoLocations";
 
 import {
   fetchInstagramImages,
   fetchInstagramMedia,
   fetchInstagramProfileInfo,
-} from "../services/instagram"; // importa a função
+} from "../services/instagram";
 
 import { FaInstagram, FaFacebook, FaEnvelope } from "react-icons/fa";
-import { SiThreads } from "react-icons/si"; // Threads está no pacote de ícones "simple-icons"
+import { SiThreads } from "react-icons/si";
 
-import "./MainScreen.css"; // importa o CSS específico para este componente
-import barcoCapa from "../assets/image/barcoCapa.jpg"; // ajuste o caminho e extensão conforme necessário
+import "./MainScreen.css";
+import barcoCapa from "../assets/image/barcoCapa.jpg";
+
+// Lazy load dos componentes pesados
+const ChromaGrid = React.lazy(() => import("../components/ChromaGrid"));
+const CircularGallery = React.lazy(() =>
+  import("../components/CircularGallery")
+);
 
 export default function MainScreen() {
   const [images, setImages] = useState([]);
   const [profileInfo, setProfileInfo] = useState(null);
   const [media, setMedia] = useState([]);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 600);
 
   useEffect(() => {
-    const loadImages = async () => {
-      const imgs = await fetchInstagramImages();
+    const handleResize = () => setIsMobile(window.innerWidth < 600);
+    window.addEventListener("resize", handleResize);
+
+    const loadData = async () => {
+      const [imgs, profile, med] = await Promise.all([
+        fetchInstagramImages(),
+        fetchInstagramProfileInfo(),
+        fetchInstagramMedia(),
+      ]);
       setImages(imgs);
-    };
-
-    const loadMedia = async () => {
-      const imgs = await fetchInstagramMedia();
-      setMedia(imgs);
-    };
-
-    const loadProfleInfo = async () => {
-      const profile = await fetchInstagramProfileInfo();
       setProfileInfo(profile);
+      setMedia(med);
     };
 
-    loadImages();
-    loadProfleInfo();
-    loadMedia();
+    loadData();
+
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  // Memoriza items para evitar re-render
+  const memoItems = useMemo(() => items, []);
+
+  // Placeholder de fallback
+  const fallbackImages = [
+    "https://picsum.photos/id/287/300/300",
+    "https://picsum.photos/id/1001/300/300",
+  ];
 
   return (
     <>
@@ -57,18 +70,12 @@ export default function MainScreen() {
         style={{ height: "40dvh", position: "relative", overflow: "hidden" }}
       >
         <ImageTrail
-          items={
-            images.length
-              ? images
-              : [
-                  "https://picsum.photos/id/287/300/300",
-                  "https://picsum.photos/id/1001/300/300",
-                ]
-          }
+          items={images.length ? images : fallbackImages}
           variant={1}
           backgroundImage={barcoCapa}
         />
       </div>
+
       <TrueFocus
         sentence="Foto Essência"
         manualMode={false}
@@ -77,6 +84,7 @@ export default function MainScreen() {
         animationDuration={1}
         pauseBetweenAnimations={1.5}
       />
+
       <section className="about">
         <TiltedCard
           imageSrc={profileInfo?.profilePicture}
@@ -139,23 +147,27 @@ export default function MainScreen() {
           </div>
         </div>
       </section>
+
       <CurvedLoop
         marqueeText="praias ✦ animais ✦ cidades ✦ momentos ✦ "
-        speed={3}
+        speed={2} // leve redução de velocidade
         curveAmount={300}
         direction="right"
         interactive={true}
         className="custom-text-style"
       />
+
       <h2 className="topic-title">Vários locais</h2>
       <div style={{ position: "relative" }}>
-        <ChromaGrid
-          items={items}
-          radius={300}
-          damping={0.45}
-          fadeOut={0.6}
-          ease="power3.out"
-        />
+        <Suspense fallback={<div>Carregando grid...</div>}>
+          <ChromaGrid
+            items={memoItems}
+            radius={300}
+            damping={0.45}
+            fadeOut={0.6}
+            ease="power3.out"
+          />
+        </Suspense>
       </div>
 
       <h2 className="topic-title" style={{ marginTop: 200, marginBottom: -30 }}>
@@ -164,12 +176,14 @@ export default function MainScreen() {
       <h2 className="topic-title">Histórias, Momentos</h2>
 
       <div style={{ height: "600px", position: "relative" }}>
-        <CircularGallery
-          bend={window.innerWidth < 600 ? 0 : 3}
-          textColor="#ffffff"
-          borderRadius={0.05}
-          scrollEase={0.02}
-        />
+        <Suspense fallback={<div>Carregando galeria...</div>}>
+          <CircularGallery
+            bend={isMobile ? 0 : 3}
+            textColor="#ffffff"
+            borderRadius={0.05}
+            scrollEase={0.02}
+          />
+        </Suspense>
       </div>
 
       <h2 className="topic-title" style={{ marginTop: 200, marginBottom: -30 }}>
@@ -236,53 +250,23 @@ export default function MainScreen() {
               columnGap: 16,
             }}
           >
-            {media.map((item, idx) => {
-              if (item.media_type === "VIDEO") {
-                return (
-                  <AnimatedContent
-                    distance={150}
-                    direction="vertical"
-                    reverse={false}
-                    duration={1.2}
-                    ease="power3.out"
-                    initialOpacity={0.2}
-                    animateOpacity
-                    scale={1.1}
-                    threshold={0.2}
-                    delay={0.3}
-                  >
-                    <video
-                      key={idx}
-                      src={item.media_url}
-                      controls
-                      loading="lazy"
-                      style={{
-                        width: "100%",
-                        borderRadius: 12,
-                        marginBottom: 12,
-                        display: "block",
-                      }}
-                    />
-                  </AnimatedContent>
-                );
-              }
-
-              return (
-                <AnimatedContent
-                  distance={150}
-                  direction="vertical"
-                  reverse={false}
-                  duration={1.2}
-                  ease="power3.out"
-                  initialOpacity={0.2}
-                  animateOpacity
-                  scale={1.1}
-                  threshold={0}
-                  delay={0.3}
-                >
-                  <img
-                    key={idx}
+            {media.map((item, idx) => (
+              <div>
+                {item.media_type === "VIDEO" ? (
+                  <video
                     src={item.media_url}
+                    controls
+                    loading="lazy"
+                    style={{
+                      width: "100%",
+                      borderRadius: 12,
+                      marginBottom: 12,
+                      display: "block",
+                    }}
+                  />
+                ) : (
+                  <img
+                    src={item.thumbnail_url || item.media_url}
                     alt={`Instagram ${idx}`}
                     loading="lazy"
                     style={{
@@ -293,9 +277,9 @@ export default function MainScreen() {
                       display: "block",
                     }}
                   />
-                </AnimatedContent>
-              );
-            })}
+                )}
+              </div>
+            ))}
           </div>
         ) : (
           <p>Nenhuma imagem carregada do Instagram.</p>
