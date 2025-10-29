@@ -21,6 +21,7 @@ import { SiThreads } from "react-icons/si";
 
 import "./MainScreen.css";
 import barcoCapa from "../assets/image/barcoCapa.jpg";
+import Header from "../components/Header";
 
 // Lazy load dos componentes pesados
 const ChromaGrid = React.lazy(() => import("../components/ChromaGrid"));
@@ -65,6 +66,7 @@ export default function MainScreen() {
 
   return (
     <>
+      <Header profilePic={profileInfo?.profilePicture} />
       <div
         className="image-trail-content"
         style={{ height: "40dvh", position: "relative", overflow: "hidden" }}
