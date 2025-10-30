@@ -1,11 +1,14 @@
 .header {
   position: fixed;
   width: 50vw;
+  min-width: 600px;
   height: 80px;
   z-index: 1000;
-  left: 25vw;
+  left: 50%;
+  transform: translateX(-50%);
   backdrop-filter: blur(10px);
   border-radius: 20px;
+  background-color: #0000005e;
   border: 1px solid #80808036;
   margin-top: 20px;
 }
@@ -19,10 +22,18 @@
 
   a {
     text-decoration: none;
-    color: #000000;
-    font-weight: bold;
+    background-color: white;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bolder;
     font-size: 1.2rem;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  a:hover {
+    transform: scale(1.2);
+    transition: all 0.3s ease-in-out;
   }
 }
 
@@ -32,4 +43,23 @@
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #80808036;
+}
+
+.mobile {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .header {
+    width: 90vw;
+    min-width: unset;
+  }
+
+  .pc {
+    display: none;
+  }
+
+  .mobile {
+    display: flex;
+  }
 }
