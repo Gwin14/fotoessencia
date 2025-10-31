@@ -2,13 +2,23 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import { FaUser, FaImages, FaRunning, FaAppStore } from "react-icons/fa";
+import { useInstagram } from "../context/InstagramContext";
 
-export default function Header({ profilePic }) {
+export default function Header() {
+  const { profileInfo } = useInstagram();
+
+  const defaultPic =
+    "https://via.placeholder.com/40x40/444/FFFFFF?text=•";
+
   return (
     <header className="header">
-      {/* Navegação em desktop */}
+      {/* Navegação desktop */}
       <nav className="header-nav pc">
-        <img src={profilePic} alt="Foto de perfil" className="headerPic" />
+        <img
+          src={profileInfo?.profilePicture || defaultPic}
+          alt="Foto de perfil"
+          className="headerPic"
+        />
 
         <Link to="/">Sobre</Link>
         <Link to="/galery">Galeria</Link>
@@ -16,9 +26,13 @@ export default function Header({ profilePic }) {
         <Link to="/WIP">Komorebi</Link>
       </nav>
 
-      {/* Navegação em mobile (ícones) */}
+      {/* Navegação mobile */}
       <nav className="header-nav mobile">
-        <img src={profilePic} alt="Foto de perfil" className="headerPic" />
+        <img
+          src={profileInfo?.profilePicture || defaultPic}
+          alt="Foto de perfil"
+          className="headerPic"
+        />
 
         <Link to="/" title="Sobre">
           <FaUser size={24} color="#fff" />

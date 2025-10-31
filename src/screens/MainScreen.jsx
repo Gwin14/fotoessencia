@@ -7,14 +7,10 @@ import CurvedLoop from "../components/CurvedLoop";
 import CountUp from "../components/CountUp";
 import GradientText from "../components/GradientText";
 import AnimatedContent from "../components/AnimatedContent";
+import { useInstagram } from "../context/InstagramContext";
 
 import { items } from "../data/photoLocations";
 
-import {
-  fetchInstagramImages,
-  fetchInstagramMedia,
-  fetchInstagramProfileInfo,
-} from "../services/instagram";
 
 import { FaInstagram, FaFacebook, FaEnvelope } from "react-icons/fa";
 import { SiThreads } from "react-icons/si";
@@ -28,25 +24,18 @@ const CircularGallery = React.lazy(() =>
   import("../components/CircularGallery")
 );
 
+
+
 export default function MainScreen() {
-  const [images, setImages] = useState([]);
-  const [profileInfo, setProfileInfo] = useState(null);
-  const [media, setMedia] = useState([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 600);
+const { images, profileInfo, media } = useInstagram();
+  
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 600);
     window.addEventListener("resize", handleResize);
 
     const loadData = async () => {
-      const [imgs, profile, med] = await Promise.all([
-        fetchInstagramImages(),
-        fetchInstagramProfileInfo(),
-        fetchInstagramMedia(),
-      ]);
-      setImages(imgs);
-      setProfileInfo(profile);
-      setMedia(med);
     };
 
     loadData();

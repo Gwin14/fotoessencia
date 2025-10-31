@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+// src/App.jsx
 import {
   BrowserRouter as Router,
   Routes,
@@ -6,12 +6,12 @@ import {
   useLocation,
 } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import { InstagramProvider } from "./context/InstagramContext";
 
-import Squares from "./components/Squares";
-import MainScreen from "./screens/MainScreen";
 import ClickSpark from "./components/ClickSpark";
+import Squares from "./components/Squares";
 import Header from "./components/Header";
-import { fetchInstagramProfileInfo } from "./services/instagram";
+import MainScreen from "./screens/MainScreen";
 import WIPScreen from "./screens/WIPScreen";
 import GaleryScreen from "./screens/GaleryScreen";
 
@@ -34,7 +34,6 @@ function AnimatedRoutes() {
             </motion.main>
           }
         />
-
         <Route
           path="/WIP"
           element={
@@ -48,7 +47,6 @@ function AnimatedRoutes() {
             </motion.main>
           }
         />
-
         <Route
           path="/galery"
           element={
@@ -68,40 +66,30 @@ function AnimatedRoutes() {
 }
 
 function App() {
-  const [profileInfo, setProfileInfo] = useState(null);
-
-  useEffect(() => {
-    const loadData = async () => {
-      const [profile] = await Promise.all([fetchInstagramProfileInfo()]);
-      setProfileInfo(profile);
-    };
-    loadData();
-  }, []);
-
   return (
-    <Router>
-      {/* Efeitos globais — sempre visíveis */}
-      <ClickSpark
-        sparkColor="white"
-        sparkSize={10}
-        sparkRadius={15}
-        sparkCount={8}
-        duration={400}
-      >
-        <Squares
-          speed={0.1}
-          squareSize={40}
-          direction="diagonal"
-          borderColor="#75757533"
-          hoverFillColor="#75757533"
-        />
+    <InstagramProvider>
+      <Router>
+        <ClickSpark
+          sparkColor="white"
+          sparkSize={10}
+          sparkRadius={15}
+          sparkCount={8}
+          duration={400}
+        >
+          <Squares
+            speed={0.1}
+            squareSize={40}
+            direction="diagonal"
+            borderColor="#75757533"
+            hoverFillColor="#75757533"
+          />
 
-        <Header profilePic={profileInfo?.profilePicture} />
+          <Header />
 
-        {/* Somente o conteúdo da rota muda */}
-        <AnimatedRoutes />
-      </ClickSpark>
-    </Router>
+          <AnimatedRoutes />
+        </ClickSpark>
+      </Router>
+    </InstagramProvider>
   );
 }
 
