@@ -13,6 +13,7 @@ import ClickSpark from "./components/ClickSpark";
 import Header from "./components/Header";
 import { fetchInstagramProfileInfo } from "./services/instagram";
 import WIPScreen from "./screens/WIPScreen";
+import GaleryScreen from "./screens/GaleryScreen";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -44,6 +45,20 @@ function AnimatedRoutes() {
               transition={{ duration: 0.4, ease: "easeInOut" }}
             >
               <WIPScreen />
+            </motion.main>
+          }
+        />
+
+        <Route
+          path="/galery"
+          element={
+            <motion.main
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -30 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+            >
+              <GaleryScreen />
             </motion.main>
           }
         />

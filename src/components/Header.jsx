@@ -11,7 +11,7 @@ export default function Header({ profilePic }) {
         <img src={profilePic} alt="Foto de perfil" className="headerPic" />
 
         <Link to="/">Sobre</Link>
-        <Link to="/WIP">Galeria</Link>
+        <Link to="/galery">Galeria</Link>
         <Link to="/WIP">Atividades</Link>
         <Link to="/WIP">Komorebi</Link>
       </nav>
@@ -23,7 +23,7 @@ export default function Header({ profilePic }) {
         <Link to="/" title="Sobre">
           <FaUser size={24} color="#fff" />
         </Link>
-        <Link to="/WIP" title="Galeria">
+        <Link to="/galery" title="Galeria">
           <FaImages size={24} color="#fff" />
         </Link>
         <Link to="/WIP" title="Atividades">
