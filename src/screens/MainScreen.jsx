@@ -6,11 +6,9 @@ import ScrambledText from "../components/ScrambledText";
 import CurvedLoop from "../components/CurvedLoop";
 import CountUp from "../components/CountUp";
 import GradientText from "../components/GradientText";
-import AnimatedContent from "../components/AnimatedContent";
 import { useInstagram } from "../context/InstagramContext";
 
 import { items } from "../data/photoLocations";
-
 
 import { FaInstagram, FaFacebook, FaEnvelope } from "react-icons/fa";
 import { SiThreads } from "react-icons/si";
@@ -24,19 +22,15 @@ const CircularGallery = React.lazy(() =>
   import("../components/CircularGallery")
 );
 
-
-
 export default function MainScreen() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 600);
-const { images, profileInfo, media } = useInstagram();
-  
+  const { images, profileInfo, media } = useInstagram();
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 600);
     window.addEventListener("resize", handleResize);
 
-    const loadData = async () => {
-    };
+    const loadData = async () => {};
 
     loadData();
 
