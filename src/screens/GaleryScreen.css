@@ -1,4 +1,4 @@
-/* galery.css */
+@import url("https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap");
 
 .galery-screen {
   width: 100%;
@@ -32,4 +32,24 @@
   background-size: cover;
   background-position: center;
   border-radius: 8px;
+}
+
+.galery-screen h1 {
+  font-size: 5rem;
+  margin-bottom: 2rem;
+  font-family: "Rubik Mono One", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@media (max-width: 600px) {
+  .galery-screen h1 {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .galery-screen h1 {
+    font-size: 2.5rem;
+  }
 }

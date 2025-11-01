@@ -1,13 +1,34 @@
 import "./GaleryScreen.css";
 import { useInstagram } from "../context/InstagramContext";
 import { useState } from "react";
+import SplitText from "../components/SplitText";
 
 export default function GaleryScreen() {
   const { images, profileInfo, media } = useInstagram();
   const [selectedImage, setSelectedImage] = useState(null);
 
+  const handleAnimationComplete = () => {
+    console.log("All letters have animated!");
+  };
+
   return (
     <div className="galery-screen">
+      <SplitText
+        tag="h1"
+        text="A Galeria"
+        className="text-2xl font-semibold text-center"
+        delay={100}
+        duration={0.6}
+        ease="power3.out"
+        splitType="chars"
+        from={{ opacity: 0, y: 40 }}
+        to={{ opacity: 1, y: 0 }}
+        threshold={0.1}
+        rootMargin="-100px"
+        textAlign="center"
+        onLetterAnimationComplete={handleAnimationComplete}
+      />
+
       <div>
         {media && media.length > 0 ? (
           <div
