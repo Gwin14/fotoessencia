@@ -79,48 +79,25 @@ export default function GaleryScreen() {
         {/* Modal */}
         {selectedImage && (
           <div
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              backgroundColor: "rgba(0,0,0,0.5)",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              zIndex: 1000,
-            }}
+            className="modal-background"
             onClick={() => setSelectedImage(null)} // fecha clicando fora
           >
             <div
-              style={{
-                background: "#fff",
-                padding: "20px",
-                borderRadius: "8px",
-                position: "relative",
-              }}
+              className="modal-container"
               onClick={(e) => e.stopPropagation()} // evita fechar clicando na imagem
             >
-              <span
-                style={{
-                  position: "absolute",
-                  top: "10px",
-                  right: "15px",
-                  cursor: "pointer",
-                  fontSize: "20px",
-                  fontWeight: "bold",
-                }}
+              {/* <span
+                className="modal-close-btn"
                 onClick={() => setSelectedImage(null)}
               >
                 &times;
-              </span>
+              </span> */}
               <img
+                className="modal-image"
                 src={selectedImage.media_url}
                 alt={selectedImage.title}
-                style={{ maxWidth: "500px", maxHeight: "80vh" }}
               />
-              <p>{selectedImage.caption}</p>
+              <p className="modal-caption">{selectedImage.caption}</p>
             </div>
           </div>
         )}
