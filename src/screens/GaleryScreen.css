@@ -1,0 +1,116 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Homemade+Apple&family=Rock+Salt&display=swap");
+
+.galery-screen {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 100px;
+}
+
+.list {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 2rem;
+  padding-top: 400px;
+}
+
+.item-wrapper {
+  position: absolute;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.item-img {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+}
+
+.galery-screen h1 {
+  font-size: 5rem;
+  margin-bottom: 2rem;
+  font-family: "Rubik Mono One", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  animation: photo-anim 0.3s ease;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.modal-image {
+  max-width: 1000px;
+  max-height: 70vh;
+}
+
+.modal-caption {
+  max-width: 300px;
+  text-wrap: wrap;
+  font-size: 1.5rem;
+  /* line-height: 1.4; */
+
+  font-family: "Caveat Brush", cursive;
+}
+
+@media (max-width: 600px) {
+  .galery-screen h1 {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .galery-screen h1 {
+    font-size: 2.5rem;
+  }
+
+  .modal-image {
+    max-width: 90vw;
+    max-height: 50vh;
+  }
+}
+
+@keyframes photo-anim {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

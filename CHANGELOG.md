@@ -1,4 +1,24 @@
-## [1.1.0] - 2025-10-30
+## [1.2.0] - 2025-11-05
+
+### 🚀 Features
+
+- *(galery-screen)* Galery screen and route
+- *(galery-screen)* Images modal
+
+### 🐛 Bug Fixes
+
+- *(header)* Header links
+
+### 🚜 Refactor
+
+- *(app)* Instagram context api
+
+### 🎨 Styling
+
+- *(galery-screen)* New galery title
+- *(galery-screen)* Modal improvements
+- *(galery-screen)* Modal fonts and anim
+## [1.1.0] - 2025-10-31
 
 ### 🚀 Features
 
@@ -26,6 +46,10 @@
 ### 🚜 Refactor
 
 - *(header)* Header now on mainScreen
+
+### 📚 Documentation
+
+- Create cliff.toml and CHANGELOG.md
 
 ### ⚡ Performance
 
