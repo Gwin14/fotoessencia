@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Homemade+Apple&family=Rock+Salt&display=swap");
 
 .galery-screen {
   width: 100%;
@@ -60,6 +61,7 @@
   padding: 20px;
   border-radius: 8px;
   position: relative;
+  animation: photo-anim 0.3s ease;
 }
 
 .modal-close-btn {
@@ -80,8 +82,9 @@
   max-width: 300px;
   text-wrap: wrap;
   font-size: 1.5rem;
+  /* line-height: 1.4; */
 
-  font-family: "Brush Script MT", "Lucida Handwriting", cursive;
+  font-family: "Caveat Brush", cursive;
 }
 
 @media (max-width: 600px) {
@@ -98,5 +101,16 @@
   .modal-image {
     max-width: 90vw;
     max-height: 50vh;
+  }
+}
+
+@keyframes photo-anim {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
   }
 }
