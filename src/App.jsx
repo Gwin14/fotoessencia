@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { InstagramProvider } from "./context/InstagramContext";
+import { YoutubeProvider } from "./context/YoutubeContext";
 
 import ClickSpark from "./components/ClickSpark";
 import Squares from "./components/Squares";
@@ -14,6 +15,7 @@ import Header from "./components/Header";
 import MainScreen from "./screens/MainScreen";
 import WIPScreen from "./screens/WIPScreen";
 import GaleryScreen from "./screens/GaleryScreen";
+import ActivityScreen from "./screens/ActivityScreen";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -60,6 +62,19 @@ function AnimatedRoutes() {
             </motion.main>
           }
         />
+        <Route
+          path="/activity"
+          element={
+            <motion.main
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -30 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+            >
+              <ActivityScreen />
+            </motion.main>
+          }
+        />
       </Routes>
     </AnimatePresence>
   );
@@ -68,27 +83,29 @@ function AnimatedRoutes() {
 function App() {
   return (
     <InstagramProvider>
-      <Router>
-        <ClickSpark
-          sparkColor="white"
-          sparkSize={10}
-          sparkRadius={15}
-          sparkCount={8}
-          duration={400}
-        >
-          <Squares
-            speed={0.1}
-            squareSize={40}
-            direction="diagonal"
-            borderColor="#75757533"
-            hoverFillColor="#75757533"
-          />
+      <YoutubeProvider>
+        <Router>
+          <ClickSpark
+            sparkColor="white"
+            sparkSize={10}
+            sparkRadius={15}
+            sparkCount={8}
+            duration={400}
+          >
+            <Squares
+              speed={0.1}
+              squareSize={40}
+              direction="diagonal"
+              borderColor="#75757533"
+              hoverFillColor="#75757533"
+            />
 
-          <Header />
+            <Header />
 
-          <AnimatedRoutes />
-        </ClickSpark>
-      </Router>
+            <AnimatedRoutes />
+          </ClickSpark>
+        </Router>
+      </YoutubeProvider>
     </InstagramProvider>
   );
 }

@@ -22,7 +22,7 @@ export default function Header() {
 
         <Link to="/">Sobre</Link>
         <Link to="/galery">Galeria</Link>
-        <Link to="/WIP">Atividades</Link>
+        <Link to="/activity">Atividades</Link>
         <Link to="/WIP">Komorebi</Link>
       </nav>
 
