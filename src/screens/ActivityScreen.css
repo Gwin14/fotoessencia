@@ -1,0 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Homemade+Apple&family=Rock+Salt&display=swap");
+
+.activity-screen {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.activity-title {
+  transform: translateY(30px);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 80vw;
+  margin: auto;
+
+  p {
+    font-size: 3.5rem;
+    font-weight: bold;
+    font-family: "Rubik Mono One", monospace;
+    padding: 0px !important;
+    margin: 0px !important;
+  }
+
+  /* Estilos para o segundo p */
+  p:nth-of-type(2) {
+    font-size: 5rem;
+    transform: translateY(-20px);
+  }
+}
