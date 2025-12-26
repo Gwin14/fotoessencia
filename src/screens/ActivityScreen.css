@@ -7,7 +7,7 @@
 }
 
 .activity-title {
-  transform: translateY(30px);
+  transform: translateY(200px);
   display: flex;
   flex-direction: row;
   align-items: center;
