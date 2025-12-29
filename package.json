@@ -10,11 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
     "@gsap/react": "^2.1.2",
-    "@mui/material": "^7.3.6",
-    "@mui/x-charts": "^8.23.0",
     "dotenv": "^17.1.0",
     "framer-motion": "^12.23.24",
     "gsap": "^3.13.0",
