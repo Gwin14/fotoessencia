@@ -14,6 +14,7 @@ import Header from "./components/Header";
 import MainScreen from "./screens/MainScreen";
 import WIPScreen from "./screens/WIPScreen";
 import GaleryScreen from "./screens/GaleryScreen";
+import KomorebiScreen from "./screens/KomorebiScreen";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -44,6 +45,19 @@ function AnimatedRoutes() {
               transition={{ duration: 0.4, ease: "easeInOut" }}
             >
               <WIPScreen />
+            </motion.main>
+          }
+        />
+        <Route
+          path="/komorebi"
+          element={
+            <motion.main
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -30 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+            >
+              <KomorebiScreen />
             </motion.main>
           }
         />
