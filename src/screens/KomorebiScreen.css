@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Homemade+Apple&family=Rock+Salt&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
 
 .komorebi-container {
   width: 100%;
@@ -8,6 +8,17 @@
   flex-direction: column;
   align-items: center;
   padding-top: 100px;
+}
+
+.komorebi-icon {
+  max-width: 500px;
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  top: 10px;
+
+  mask-image: linear-gradient(to bottom, #00000096, #00000000);
+  -webkit-mask-image: linear-gradient(to bottom, #00000096, #00000000);
 }
 
 .komorebi-hero {
@@ -21,6 +32,7 @@
 
 .komorebi-title {
   font-size: clamp(3.5rem, 6vw, 5.5rem);
+  text-wrap: wrap;
   font-weight: 600;
   color: #111;
   text-align: center;
@@ -40,7 +52,7 @@
   background-color: #ffaa00ff;
   /* overflow: hidden; */
   z-index: -1;
-  min-width: 450px; /* ajuste para a MAIOR palavra */
+
   text-align: center;
 }
 
@@ -52,7 +64,87 @@
   will-change: opacity, transform;
 }
 
-.mockup-triple {
-  width: 50%;
-  margin: auto;
+.demonstration {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 70%;
+  margin: 100px auto;
+  gap: 50px;
+
+  div {
+    padding: 0;
+    margin: 0;
+  }
+
+  video {
+    width: 25%;
+    border-radius: 20px;
+  }
+
+  img {
+    width: 400px;
+    max-width: 100%;
+    border-radius: 20px;
+  }
+
+  p {
+    margin: auto;
+    text-align: center !important;
+  }
+
+  p:nth-child(1) {
+    font-size: 6rem;
+    font-family: "Rubik", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: 800;
+  }
+
+  p:nth-child(2) {
+    font-size: 3rem;
+    font-family: "Rubik", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: 400;
+  }
+}
+
+@media (max-width: 800px) {
+  .komorebi-hero {
+    flex-direction: column;
+    width: 95%;
+    text-align: center;
+  }
+
+  .komorebi-title {
+    font-size: 2.5rem;
+  }
+
+  .komorebi-rotating {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  .demonstration {
+    flex-direction: column;
+    width: 95%;
+    gap: 30px;
+  }
+
+  .demonstration video {
+    width: 100%;
+  }
+
+  .demonstration img {
+    width: 100%;
+  }
+
+  .demonstration p:nth-child(1) {
+    font-size: 3rem;
+  }
+
+  .demonstration p:nth-child(2) {
+    font-size: 1.5rem;
+  }
 }
