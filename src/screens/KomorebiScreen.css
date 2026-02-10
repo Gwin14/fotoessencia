@@ -64,7 +64,8 @@
   will-change: opacity, transform;
 }
 
-.demonstration {
+.demonstration,
+.demonstrationSecond {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -84,7 +85,7 @@
 
   img {
     width: 400px;
-    max-width: 100%;
+    min-width: 30%;
     border-radius: 20px;
   }
 
@@ -94,7 +95,7 @@
   }
 
   p:nth-child(1) {
-    font-size: 6rem;
+    font-size: 4rem;
     font-family: "Rubik", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
@@ -132,8 +133,15 @@
     gap: 30px;
   }
 
+  .demonstrationSecond {
+    flex-direction: column-reverse;
+    width: 95%;
+    gap: 30px;
+  }
+
   .demonstration video {
     width: 100%;
+    max-width: 500px;
   }
 
   .demonstration img {
@@ -141,7 +149,7 @@
   }
 
   .demonstration p:nth-child(1) {
-    font-size: 3rem;
+    font-size: 2.6rem;
   }
 
   .demonstration p:nth-child(2) {

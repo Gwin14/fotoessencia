@@ -50,7 +50,7 @@ export default function KomorebiScreen() {
           ></video>
         </section>
 
-        <section className="demonstration">
+        <section className="demonstrationSecond">
           <img src="src/assets/mockupTriple.png" alt="mockup celulares" />
           <div>
             <BlurText
