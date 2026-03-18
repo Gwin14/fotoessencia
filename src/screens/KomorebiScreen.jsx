@@ -1,6 +1,7 @@
 import RotatingText from "../components/RotatingText";
 import "./KomorebiScreen.css";
 import BlurText from "../components/BlurText";
+import { FaApple, FaGooglePlay } from "react-icons/fa";
 
 export default function KomorebiScreen() {
   return (
@@ -69,6 +70,20 @@ export default function KomorebiScreen() {
             />
           </div>
         </section>
+
+        <div className="download-section">
+          <h2 className="download-title">Em breve nas lojas</h2>
+          <div className="store-buttons">
+            <button className="store-button">
+              <FaApple size={24} />
+              <span>App Store</span>
+            </button>
+            <button className="store-button">
+              <FaGooglePlay size={24} />
+              <span>Google Play</span>
+            </button>
+          </div>
+        </div>
       </div>
     </>
   );
