@@ -31,16 +31,9 @@ export default function GaleryScreen() {
 
       <div>
         {media && media.length > 0 ? (
-          <div
-            style={{
-              width: "80vw",
-              margin: "auto",
-              columnWidth: 300,
-              columnGap: 16,
-            }}
-          >
+          <div className="gallery-grid">
             {media.map((item, idx) => (
-              <div>
+              <div className="galery-item">
                 {item.media_type === "VIDEO" ? (
                   <video
                     key={item.id}
@@ -49,8 +42,8 @@ export default function GaleryScreen() {
                     loading="lazy"
                     style={{
                       width: "100%",
-                      borderRadius: 12,
-                      marginBottom: 12,
+                      height: "100%",
+                      objectFit: "cover",
                       display: "block",
                     }}
                   />
@@ -63,9 +56,8 @@ export default function GaleryScreen() {
                     onClick={() => setSelectedImage(item)}
                     style={{
                       width: "100%",
+                      height: "100%",
                       objectFit: "cover",
-                      borderRadius: 12,
-                      marginBottom: 12,
                       display: "block",
                     }}
                   />

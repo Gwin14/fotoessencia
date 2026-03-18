@@ -18,8 +18,8 @@ import barcoCapa from "../assets/image/barcoCapa.jpg";
 
 // Lazy load dos componentes pesados
 const ChromaGrid = React.lazy(() => import("../components/ChromaGrid"));
-const CircularGallery = React.lazy(() =>
-  import("../components/CircularGallery")
+const CircularGallery = React.lazy(
+  () => import("../components/CircularGallery"),
 );
 
 export default function MainScreen() {
@@ -225,16 +225,16 @@ export default function MainScreen() {
 
       <div>
         {media && media.length > 0 ? (
-          <div
-            style={{
-              width: "80vw",
-              margin: "auto",
-              columnWidth: 300,
-              columnGap: 16,
-            }}
-          >
+          <div className="gallery-grid">
             {media.map((item, idx) => (
-              <div>
+              <div
+                className="galery-item"
+                style={{
+                  width: "100%",
+                  aspectRatio: "1 / 1",
+                  overflow: "hidden",
+                }}
+              >
                 {item.media_type === "VIDEO" ? (
                   <video
                     src={item.media_url}
@@ -242,8 +242,8 @@ export default function MainScreen() {
                     loading="lazy"
                     style={{
                       width: "100%",
-                      borderRadius: 12,
-                      marginBottom: 12,
+                      height: "100%",
+                      objectFit: "cover",
                       display: "block",
                     }}
                   />
@@ -254,9 +254,8 @@ export default function MainScreen() {
                     loading="lazy"
                     style={{
                       width: "100%",
+                      height: "100%",
                       objectFit: "cover",
-                      borderRadius: 12,
-                      marginBottom: 12,
                       display: "block",
                     }}
                   />
