@@ -1,0 +1,229 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+
+.komorebi-container {
+  width: 100%;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 100px;
+}
+
+.komorebi-icon {
+  max-width: 500px;
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  top: 10px;
+
+  mask-image: linear-gradient(to bottom, #00000096, #00000000);
+  -webkit-mask-image: linear-gradient(to bottom, #00000096, #00000000);
+}
+
+.komorebi-hero {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  margin: auto;
+}
+
+.komorebi-title {
+  font-size: clamp(3.5rem, 6vw, 5.5rem);
+  text-wrap: wrap;
+  font-weight: 600;
+  color: #111;
+  text-align: center;
+  line-height: 1.2;
+  font-family: "Rubik Mono One";
+}
+
+.komorebi-rotating {
+  display: inline-block;
+  position: relative;
+  margin-left: 0.5rem;
+  color: white;
+  font-weight: 700;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: left;
+  background-color: #ffaa00ff;
+  /* overflow: hidden; */
+  z-index: -1;
+
+  text-align: center;
+}
+
+.komorebi-rotating > * {
+  display: inline-block;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+  will-change: opacity, transform;
+}
+
+.demonstration,
+.demonstrationSecond {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 70%;
+  margin: 100px auto;
+  gap: 50px;
+
+  div {
+    padding: 0;
+    margin: 0;
+  }
+
+  video {
+    width: 25%;
+    border-radius: 20px;
+  }
+
+  img {
+    width: 400px;
+    min-width: 30%;
+    border-radius: 20px;
+  }
+
+  p {
+    margin: auto;
+    text-align: center !important;
+  }
+
+  p:nth-child(1) {
+    font-size: 4rem;
+    font-family: "Rubik", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: 800;
+  }
+
+  p:nth-child(2) {
+    font-size: 3rem;
+    font-family: "Rubik", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: 400;
+  }
+}
+
+.download-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 5rem 0;
+  text-align: center;
+  width: 100%;
+}
+
+.download-title {
+  font-size: 2.5rem;
+  font-family: "Rubik Mono One", sans-serif;
+  margin-bottom: 2rem;
+  color: #111;
+}
+
+.store-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.store-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #111;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-family: "Rubik", sans-serif;
+  font-weight: 500;
+  font-size: 1.2rem;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.store-button:hover {
+  transform: translateY(-3px);
+  background-color: #333;
+}
+
+@media (max-width: 800px) {
+  .komorebi-container {
+    padding-top: 50px;
+  }
+
+  .komorebi-hero {
+    flex-direction: column;
+    width: 95%;
+    text-align: center;
+  }
+
+  .komorebi-title {
+    font-size: 2.5rem;
+  }
+
+  .komorebi-rotating {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  .demonstration {
+    flex-direction: column;
+    width: 95%;
+    margin: 50px auto;
+    gap: 30px;
+  }
+
+  .demonstrationSecond {
+    flex-direction: column-reverse;
+    width: 95%;
+    margin: 50px auto;
+    gap: 30px;
+  }
+
+  .demonstration video,
+  .demonstrationSecond video {
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .demonstration img,
+  .demonstrationSecond img {
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .demonstration p:nth-child(1),
+  .demonstrationSecond p:nth-child(1) {
+    font-size: 2.6rem;
+  }
+
+  .demonstration p:nth-child(2),
+  .demonstrationSecond p:nth-child(2) {
+    font-size: 1.5rem;
+  }
+
+  .download-title {
+    font-size: 1.8rem;
+  }
+
+  .store-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .store-button {
+    width: 80%;
+    justify-content: center;
+  }
+}

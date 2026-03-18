@@ -7,8 +7,7 @@ import { useInstagram } from "../context/InstagramContext";
 export default function Header() {
   const { profileInfo } = useInstagram();
 
-  const defaultPic =
-    "https://via.placeholder.com/40x40/444/FFFFFF?text=•";
+  const defaultPic = "https://via.placeholder.com/40x40/444/FFFFFF?text=•";
 
   return (
     <header className="header">
@@ -22,8 +21,8 @@ export default function Header() {
 
         <Link to="/">Sobre</Link>
         <Link to="/galery">Galeria</Link>
-        <Link to="/WIP">Atividades</Link>
-        <Link to="/WIP">Komorebi</Link>
+        {/* <Link to="/WIP">Atividades</Link> */}
+        <Link to="/komorebi">Komorebi</Link>
       </nav>
 
       {/* Navegação mobile */}
@@ -40,10 +39,10 @@ export default function Header() {
         <Link to="/galery" title="Galeria">
           <FaImages size={24} color="#fff" />
         </Link>
-        <Link to="/WIP" title="Atividades">
+        {/* <Link to="/WIP" title="Atividades">
           <FaRunning size={24} color="#fff" />
-        </Link>
-        <Link to="/WIP" title="App Komorebi">
+        </Link> */}
+        <Link to="/komorebi" title="App Komorebi">
           <FaAppStore size={24} color="#fff" />
         </Link>
       </nav>
