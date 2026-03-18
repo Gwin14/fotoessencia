@@ -112,6 +112,10 @@
 }
 
 @media (max-width: 800px) {
+  .komorebi-container {
+    padding-top: 50px;
+  }
+
   .komorebi-hero {
     flex-direction: column;
     width: 95%;
@@ -130,29 +134,36 @@
   .demonstration {
     flex-direction: column;
     width: 95%;
+    margin: 50px auto;
     gap: 30px;
   }
 
   .demonstrationSecond {
     flex-direction: column-reverse;
     width: 95%;
+    margin: 50px auto;
     gap: 30px;
   }
 
-  .demonstration video {
+  .demonstration video,
+  .demonstrationSecond video {
     width: 100%;
     max-width: 500px;
   }
 
-  .demonstration img {
+  .demonstration img,
+  .demonstrationSecond img {
     width: 100%;
+    max-width: 500px;
   }
 
-  .demonstration p:nth-child(1) {
+  .demonstration p:nth-child(1),
+  .demonstrationSecond p:nth-child(1) {
     font-size: 2.6rem;
   }
 
-  .demonstration p:nth-child(2) {
+  .demonstration p:nth-child(2),
+  .demonstrationSecond p:nth-child(2) {
     font-size: 1.5rem;
   }
 }
