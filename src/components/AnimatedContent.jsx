@@ -34,6 +34,11 @@ const AnimatedContent = ({
       opacity: animateOpacity ? initialOpacity : 1,
     });
 
+    // Guarda referência do trigger específico deste componente
+    // em vez de chamar ScrollTrigger.getAll().forEach(t => t.kill())
+    // que mataria triggers de TODOS os outros componentes na página
+    let scrollTriggerInstance = null;
+
     gsap.to(el, {
       [axis]: 0,
       scale: 1,
@@ -47,11 +52,17 @@ const AnimatedContent = ({
         start: `top ${startPct}%`,
         toggleActions: "play none none none",
         once: true,
+        onInit: (self) => {
+          scrollTriggerInstance = self;
+        },
       },
     });
 
     return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill());
+      // Mata apenas o trigger deste componente
+      if (scrollTriggerInstance) {
+        scrollTriggerInstance.kill();
+      }
       gsap.killTweensOf(el);
     };
   }, [
