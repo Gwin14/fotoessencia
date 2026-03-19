@@ -3,13 +3,17 @@ import "./KomorebiScreen.css";
 import BlurText from "../components/BlurText";
 import { FaApple, FaGooglePlay } from "react-icons/fa";
 
+import iconeKomorebi from "../assets/image/iconeKomorebi.png";
+import videoKomorebi from "../assets/video/video.MP4";
+import mockupTriple from "../assets/mockupTriple.png";
+
 export default function KomorebiScreen() {
   return (
     <>
       <div className="komorebi-container">
         <img
           className="komorebi-icon"
-          src="src/assets/image/iconeKomorebi.png"
+          src={iconeKomorebi}
           alt="icone komorebi"
         />
 
@@ -42,17 +46,11 @@ export default function KomorebiScreen() {
               className="text-2xl mb-8"
             />
           </div>
-          <video
-            loop
-            autoPlay
-            muted
-            playsInline
-            src="src/assets/video/video.MP4"
-          ></video>
+          <video loop autoPlay muted playsInline src={videoKomorebi}></video>
         </section>
 
         <section className="demonstrationSecond">
-          <img src="src/assets/mockupTriple.png" alt="mockup celulares" />
+          <img src={mockupTriple} alt="mockup celulares" />
           <div>
             <BlurText
               text="Múltiplas funcionalidades"
