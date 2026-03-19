@@ -48,7 +48,7 @@ function createTextTexture(
   gl,
   text,
   font = "bold 30px monospace",
-  color = "black"
+  color = "black",
 ) {
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d");
@@ -92,7 +92,7 @@ class Title {
       this.gl,
       this.text,
       this.font,
-      this.textColor
+      this.textColor,
     );
     const geometry = new Plane(this.gl);
     const program = new Program(this.gl, {
@@ -337,11 +337,13 @@ class App {
       font = "bold 30px Figtree",
       scrollSpeed = 2,
       scrollEase = 0.05,
-    } = {}
+      autoRotateSpeed = 2,
+    } = {},
   ) {
     document.documentElement.classList.remove("no-js");
     this.container = container;
     this.scrollSpeed = scrollSpeed;
+    this.autoRotateSpeed = autoRotateSpeed;
     this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0 };
     this.onCheckDebounce = debounce(this.onCheck, 200);
     this.createRenderer();
@@ -488,15 +490,23 @@ class App {
     this.viewport = { width, height };
     if (this.medias) {
       this.medias.forEach((media) =>
-        media.onResize({ screen: this.screen, viewport: this.viewport })
+        media.onResize({ screen: this.screen, viewport: this.viewport }),
       );
     }
   }
   update() {
+    let speed = this.autoRotateSpeed;
+    if (window.innerWidth < 600) {
+      speed *= 6;
+    }
+    if (speed && !this.isDown) {
+      this.scroll.target += speed;
+    }
+
     this.scroll.current = lerp(
       this.scroll.current,
       this.scroll.target,
-      this.scroll.ease
+      this.scroll.ease,
     );
     const direction = this.scroll.current > this.scroll.last ? "right" : "left";
     if (this.medias) {
@@ -551,6 +561,7 @@ export default function CircularGallery({
   font = "bold 30px Figtree",
   scrollSpeed = 2,
   scrollEase = 0.05,
+  autoRotateSpeed = 0.01,
 }) {
   const containerRef = useRef(null);
   useEffect(() => {
@@ -562,10 +573,20 @@ export default function CircularGallery({
       font,
       scrollSpeed,
       scrollEase,
+      autoRotateSpeed,
     });
     return () => {
       app.destroy();
     };
-  }, [items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase]);
+  }, [
+    items,
+    bend,
+    textColor,
+    borderRadius,
+    font,
+    scrollSpeed,
+    scrollEase,
+    autoRotateSpeed,
+  ]);
   return <div className="circular-gallery" ref={containerRef} />;
 }
