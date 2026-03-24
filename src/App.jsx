@@ -88,14 +88,6 @@ function AnimatedRoutes() {
             </Page>
           }
         />
-        <Route
-          path="/newsletter/:slug"
-          element={
-            <Page>
-              <NewsletterPostScreen />
-            </Page>
-          }
-        />
       </Routes>
     </AnimatePresence>
   );

@@ -212,14 +212,11 @@ export default function NewsletterPostScreen() {
     }
 
     // Fallback: busca o feed e acha pelo slug
-    const RSS_URL = "https://fotoessencia.substack.com/feed";
-    const CORS_PROXY = "https://api.allorigins.win/get?url=";
-
-    fetch(`${CORS_PROXY}${encodeURIComponent(RSS_URL)}`)
-      .then((r) => r.json())
-      .then((json) => {
+    fetch("/api/rss")
+      .then((r) => r.text())
+      .then((xmlText) => {
         const parser = new DOMParser();
-        const xml = parser.parseFromString(json.contents, "text/xml");
+        const xml = parser.parseFromString(xmlText, "text/xml");
         const items = Array.from(xml.querySelectorAll("item"));
 
         const found = items.find((item) => {
