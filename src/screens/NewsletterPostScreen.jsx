@@ -15,6 +15,13 @@ function parseGalleryEmbed(node) {
   }
 }
 
+function decodeHtmlEntities(text) {
+  if (!text) return "";
+  const textarea = document.createElement("textarea");
+  textarea.innerHTML = text;
+  return textarea.value;
+}
+
 function GalleryEmbed({ images, caption }) {
   const [current, setCurrent] = useState(0);
 
@@ -205,7 +212,14 @@ export default function NewsletterPostScreen() {
     const stored = sessionStorage.getItem("newsletter_post");
     if (stored) {
       try {
-        setPost(JSON.parse(stored));
+        const parsed = JSON.parse(stored);
+        setPost({
+          ...parsed,
+          title: decodeHtmlEntities(parsed.title),
+          description: decodeHtmlEntities(parsed.description),
+          creator: decodeHtmlEntities(parsed.creator),
+          link: decodeHtmlEntities(parsed.link),
+        });
         setLoading(false);
         return;
       } catch {}
@@ -226,7 +240,9 @@ export default function NewsletterPostScreen() {
 
         if (found) {
           const get = (tag) =>
-            found.querySelector(tag)?.textContent?.trim() ?? "";
+            decodeHtmlEntities(
+              found.querySelector(tag)?.textContent?.trim() ?? "",
+            );
           const encoded = found.querySelector("encoded")?.textContent ?? "";
           const enclosureUrl =
             found.querySelector("enclosure")?.getAttribute("url") ?? "";

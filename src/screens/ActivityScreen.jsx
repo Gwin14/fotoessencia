@@ -2,6 +2,7 @@ import "./ActivityScreen.css";
 import "./NewsletterScreen.css";
 import "./NewsletterPostScreen.css";
 
+import { useNavigate } from "react-router-dom";
 import { useYoutube } from "../context/YoutubeContext";
 import { useInstagram } from "../context/InstagramContext";
 import React, { useState, useEffect, useRef } from "react";
@@ -11,6 +12,13 @@ import BlurText from "../components/BlurText";
 import SpotlightCard from "../components/SpotlightCard";
 
 const RSS_URL = "https://fotoessencia.substack.com/feed";
+
+function decodeHtmlEntities(text) {
+  if (!text) return "";
+  const textarea = document.createElement("textarea");
+  textarea.innerHTML = text;
+  return textarea.value;
+}
 
 const pageVariants = {
   initial: { opacity: 0, y: 30 },
@@ -25,7 +33,8 @@ function parseRSS(xmlText) {
   const items = Array.from(xml.querySelectorAll("item"));
 
   return items.map((item) => {
-    const get = (tag) => item.querySelector(tag)?.textContent?.trim() ?? "";
+    const get = (tag) =>
+      decodeHtmlEntities(item.querySelector(tag)?.textContent?.trim() ?? "");
     const encoded = item.querySelector("encoded")?.textContent ?? "";
 
     // Extrai imagem de capa do enclosure ou da primeira imagem do conteúdo
@@ -213,8 +222,14 @@ export default function ActivityScreen() {
     loadFeed();
   }, []);
 
+  const navigate = useNavigate();
+
   const handlePostClick = (post) => {
-    setSelectedPost(post);
+    const slug =
+      post.link.split("/p/")[1] ?? post.guid.split("/p/")[1] ?? "post";
+
+    sessionStorage.setItem("newsletter_post", JSON.stringify(post));
+    navigate(`/newsletter/${slug}`);
   };
 
   const handleBackToGallery = () => {

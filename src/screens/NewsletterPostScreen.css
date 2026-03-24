@@ -4,7 +4,6 @@
 .post-screen {
   width: 100%;
   min-height: 100vh;
-  padding-top: 100px;
   color: #1a1a1a;
 }
 
@@ -96,8 +95,11 @@
   inset: 0;
   background: linear-gradient(
     to bottom,
-    transparent 40%,
-    rgba(255, 255, 255, 0.95) 100%
+    transparent 0%,
+    transparent 20%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0.85) 75%,
+    #ffffff 100%
   );
   pointer-events: none;
 }
@@ -106,12 +108,12 @@
 .post-container {
   max-width: 700px;
   margin: 0 auto;
-  padding: 2rem 6rem 6rem;
+  padding: 2rem 10rem 6rem;
   background: linear-gradient(
     90deg,
     transparent 0%,
-    #ffffff 10%,
-    #ffffff 90%,
+    #fffff6 15%,
+    #fffff6 85%,
     transparent 100%
   );
 }
@@ -310,7 +312,7 @@
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid #e8e8e8;
-  background: #f9f9f9;
+  background: #fdfdfa;
 }
 
 .post-gallery-main {
@@ -375,7 +377,7 @@
   display: flex;
   gap: 4px;
   padding: 8px;
-  background: #f0f0f0;
+  background: #ecebe7;
   overflow-x: auto;
   scrollbar-width: thin;
 }

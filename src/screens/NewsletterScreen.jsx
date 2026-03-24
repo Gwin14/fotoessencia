@@ -5,13 +5,21 @@ import "./NewsletterScreen.css";
 const RSS_URL = "https://fotoessencia.substack.com/feed";
 // const CORS_PROXY = "https://api.allorigins.win/get?url=";
 
+function decodeHtmlEntities(text) {
+  if (!text) return "";
+  const textarea = document.createElement("textarea");
+  textarea.innerHTML = text;
+  return textarea.value;
+}
+
 function parseRSS(xmlText) {
   const parser = new DOMParser();
   const xml = parser.parseFromString(xmlText, "text/xml");
   const items = Array.from(xml.querySelectorAll("item"));
 
   return items.map((item) => {
-    const get = (tag) => item.querySelector(tag)?.textContent?.trim() ?? "";
+    const get = (tag) =>
+      decodeHtmlEntities(item.querySelector(tag)?.textContent?.trim() ?? "");
     const encoded = item.querySelector("encoded")?.textContent ?? "";
 
     // Extrai imagem de capa do enclosure ou da primeira imagem do conteúdo
@@ -150,9 +158,13 @@ export default function NewsletterScreen() {
                     </span>
                   )}
                 </div>
-                <h2 className="newsletter-card-title">{post.title}</h2>
+                <h2 className="newsletter-card-title">
+                  {decodeHtmlEntities(post.title)}
+                </h2>
                 <p className="newsletter-card-excerpt">
-                  {post.description || post.excerpt}
+                  {post.description
+                    ? decodeHtmlEntities(post.description)
+                    : post.excerpt}
                 </p>
                 <div className="newsletter-card-cta">
                   <span>Ler publicação</span>
