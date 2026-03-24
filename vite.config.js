@@ -35,6 +35,13 @@ export default defineConfig({
     ],
   },
   server: {
+    proxy: {
+      "/api/rss": {
+        target: "https://fotoessencia.substack.com",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/rss/, "/feed"),
+      },
+    },
     hmr: {
       overlay: false,
     },

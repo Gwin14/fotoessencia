@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
-import { FaUser, FaImages, FaRunning, FaAppStore } from "react-icons/fa";
+import { FaUser, FaImages, FaAppStore, FaNewspaper } from "react-icons/fa";
 import { useInstagram } from "../context/InstagramContext";
 
 export default function Header() {
@@ -18,10 +18,9 @@ export default function Header() {
           alt="Foto de perfil"
           className="headerPic"
         />
-
         <Link to="/">Sobre</Link>
         <Link to="/galery">Galeria</Link>
-        {/* <Link to="/WIP">Atividades</Link> */}
+        <Link to="/activity">Atividades</Link>
         <Link to="/Komorebi">Komorebi</Link>
       </nav>
 
@@ -32,16 +31,15 @@ export default function Header() {
           alt="Foto de perfil"
           className="headerPic"
         />
-
         <Link to="/" title="Sobre">
           <FaUser size={24} color="#fff" />
         </Link>
         <Link to="/galery" title="Galeria">
           <FaImages size={24} color="#fff" />
         </Link>
-        {/* <Link to="/WIP" title="Atividades">
-          <FaRunning size={24} color="#fff" />
-        </Link> */}
+        <Link to="/activity" title="Atividades">
+          <FaNewspaper size={24} color="#fff" />
+        </Link>
         <Link to="/Komorebi" title="App Komorebi">
           <FaAppStore size={24} color="#fff" />
         </Link>
