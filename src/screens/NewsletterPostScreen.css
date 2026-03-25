@@ -299,6 +299,87 @@
   display: block;
 }
 
+/* ── Imagens standalone (captioned-image-container do Substack) ── */
+.post-html-block .captioned-image-container {
+  margin: 2rem 0;
+}
+
+.post-html-block .captioned-image-container figure {
+  margin: 0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.post-html-block .captioned-image-container picture {
+  display: block;
+  line-height: 0;
+}
+
+.post-html-block .captioned-image-container img {
+  width: 100%;
+  height: auto;
+  max-height: 70vh;
+  object-fit: contain;
+  border-radius: 0;
+  margin: 0;
+  display: block;
+  /* background: #111; */
+}
+
+.post-html-block .captioned-image-container figcaption {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.8rem;
+  color: #888;
+  text-align: center;
+  padding: 0.6rem 1rem 0.8rem;
+  font-style: italic;
+  background: #f5f4ef;
+  border-top: 1px solid #e8e6df;
+}
+
+/* Esconde os botões de ação do Substack (restack, view-image) */
+.post-html-block .image-link-expand,
+.post-html-block .image2-inset > div:last-child {
+  display: none !important;
+}
+
+/* Link wrapper da imagem — remove decoração */
+.post-html-block .image-link.image2 {
+  display: block;
+  text-decoration: none;
+  cursor: default;
+  pointer-events: none;
+}
+
+.post-html-block .image-link.image2.is-viewable-img {
+  pointer-events: auto;
+  cursor: zoom-in;
+}
+
+.post-html-block .image2-inset {
+  display: block;
+  position: relative;
+  line-height: 0;
+}
+
+/* ── Vídeo nativo do Substack ── */
+.post-video-container {
+  margin: 2rem 0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0d0d0d;
+  border: 1px solid #e8e6df;
+  position: relative;
+}
+
+.post-video-player {
+  width: 100%;
+  display: block;
+  max-height: 70vh;
+  background: #0d0d0d;
+  accent-color: #d7a339;
+}
+
 /* ── Divisor ── */
 .post-divider {
   border: none;

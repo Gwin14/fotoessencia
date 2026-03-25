@@ -15,6 +15,27 @@ function parseGalleryEmbed(node) {
   }
 }
 
+function VideoEmbed({ videoId }) {
+  // Nota: O Substack armazena vídeos internamente. Para este leitor web,
+  // usamos uma estrutura de vídeo padrão. Se o RSS não prover a URL direta,
+  // exibimos um placeholder estilizado ou tentamos reconstruir a URL.
+  return (
+    <div className="post-video-container">
+      <video
+        controls
+        className="post-video-player"
+        poster={`https://substack-post-media.s3.amazonaws.com/public/images/${videoId}_1920x1080.png`}
+      >
+        <source
+          src={`https://substack.com/api/v1/video/upload/${videoId}/src`}
+          type="video/mp4"
+        />
+        Seu navegador não suporta a reprodução de vídeos.
+      </video>
+    </div>
+  );
+}
+
 function decodeHtmlEntities(text) {
   if (!text) return "";
   const textarea = document.createElement("textarea");
@@ -141,41 +162,51 @@ function PostContent({ html }) {
   const renderContent = () => {
     if (!html) return null;
 
-    // Divide o HTML em segmentos pelo marcador de galeria
-    const galleryRegex =
-      /<div class="image-gallery-embed"[^>]*data-attrs="([^"]*)"[^>]*>[\s\S]*?<\/div>/g;
+    // Regex expandido para capturar galerias E vídeos
+    const regex =
+      /<(div)[^>]*class="(image-gallery-embed|native-video-embed)"[^>]*data-attrs="([^"]*)"[^>]*>[\s\S]*?<\/div>/g;
+
     const parts = [];
     let lastIndex = 0;
     let match;
 
-    const escaped = html;
-    const regex =
-      /<div[^>]*class="image-gallery-embed"[^>]*data-attrs="([^"]*)"[^>]*>[\s\S]*?<\/div>/g;
-
-    while ((match = regex.exec(escaped)) !== null) {
-      // Texto antes da galeria
+    while ((match = regex.exec(html)) !== null) {
+      // 1. Texto/HTML antes do elemento de mídia
       if (match.index > lastIndex) {
-        const before = escaped.slice(lastIndex, match.index);
-        parts.push({ type: "html", content: before });
+        parts.push({
+          type: "html",
+          content: html.slice(lastIndex, match.index),
+        });
       }
 
-      // Galeria
+      const type = match[2]; // image-gallery-embed ou native-video-embed
+      const attrsRaw = match[3].replace(/&quot;/g, '"');
+
       try {
-        const attrsRaw = match[1].replace(/&quot;/g, '"');
         const data = JSON.parse(attrsRaw);
-        const images = data?.gallery?.images ?? [];
-        const caption = data?.gallery?.caption ?? "";
-        parts.push({ type: "gallery", images, caption });
-      } catch {
+
+        if (type === "image-gallery-embed") {
+          parts.push({
+            type: "gallery",
+            images: data?.gallery?.images ?? [],
+            caption: data?.gallery?.caption ?? "",
+          });
+        } else if (type === "native-video-embed") {
+          // Extrai o ID do vídeo do arquivo RSS
+          parts.push({
+            type: "video",
+            videoId: data?.mediaUploadId,
+          });
+        }
+      } catch (e) {
         parts.push({ type: "html", content: match[0] });
       }
 
       lastIndex = match.index + match[0].length;
     }
 
-    // Restante após a última galeria
-    if (lastIndex < escaped.length) {
-      parts.push({ type: "html", content: escaped.slice(lastIndex) });
+    if (lastIndex < html.length) {
+      parts.push({ type: "html", content: html.slice(lastIndex) });
     }
 
     return parts.map((part, i) => {
@@ -183,6 +214,9 @@ function PostContent({ html }) {
         return (
           <GalleryEmbed key={i} images={part.images} caption={part.caption} />
         );
+      }
+      if (part.type === "video") {
+        return <VideoEmbed key={i} videoId={part.videoId} />;
       }
       return (
         <div
