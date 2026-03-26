@@ -69,6 +69,7 @@
 .newsletter-card-body {
   padding: 1.25rem 1.5rem 1.5rem;
   background-color: #fffff3;
+  height: 100%;
 }
 
 .newsletter-card-meta {
