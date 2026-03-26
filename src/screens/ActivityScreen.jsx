@@ -1,5 +1,5 @@
 import "./ActivityScreen.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useYoutube } from "../context/YoutubeContext";
 import { useInstagram } from "../context/InstagramContext";
 import React, { useState, useEffect } from "react";
@@ -42,6 +42,20 @@ export default function ActivityScreen() {
   }, []);
 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const targetSlug = location.state?.scrollToPost;
+    if (!targetSlug) return;
+
+    const timeout = setTimeout(() => {
+      const el = document.getElementById(`post-${targetSlug}`);
+      el?.scrollIntoView({ behavior: "instant", block: "center" });
+    }, 110);
+
+    window.history.replaceState({}, "");
+    return () => clearTimeout(timeout);
+  }, [location.state]);
 
   const handlePostClick = (post) => {
     const slug =
@@ -168,14 +182,21 @@ export default function ActivityScreen() {
               )}
 
               <div className="newsletter-grid">
-                {posts.map((post, idx) => (
-                  <NewsletterCard
-                    key={post.guid}
-                    post={post}
-                    idx={idx}
-                    onClick={handlePostClick}
-                  />
-                ))}
+                {posts.map((post, idx) => {
+                  const slug =
+                    post.link.split("/p/")[1] ??
+                    post.guid.split("/p/")[1] ??
+                    "post";
+                  return (
+                    <NewsletterCard
+                      key={post.guid}
+                      post={post}
+                      idx={idx}
+                      onClick={handlePostClick}
+                      slug={slug}
+                    />
+                  );
+                })}
               </div>
             </div>
           </section>

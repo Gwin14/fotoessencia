@@ -62,7 +62,14 @@ export default function NewsletterPostScreen() {
     return (
       <div className="post-screen post-not-found">
         <h2>Publicação não encontrada</h2>
-        <button onClick={() => navigate("/activity")}>← Voltar</button>
+        <button
+          className="post-back-btn"
+          onClick={() =>
+            navigate("/activity", { state: { scrollToPost: slug } })
+          }
+        >
+          ← Voltar
+        </button>
       </div>
     );
   }
@@ -81,7 +88,9 @@ export default function NewsletterPostScreen() {
         {/* Botão voltar */}
         <button
           className="post-back-btn"
-          onClick={() => navigate("/activity")}
+          onClick={() =>
+            navigate("/activity", { state: { scrollToPost: slug } })
+          }
         >
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path

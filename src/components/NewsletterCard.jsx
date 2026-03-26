@@ -2,12 +2,13 @@ import React from "react";
 import { decodeHtmlEntities, formatDate } from "../utils/newsletterUtils";
 import "./NewsletterCard.css"; // Importe os estilos específicos do card
 
-export default function NewsletterCard({ post, idx, onClick }) {
+export default function NewsletterCard({ post, idx, onClick, slug }) {
   return (
     <article
       className="newsletter-card"
       onClick={() => onClick(post)}
       style={{ animationDelay: `${idx * 0.1}s` }}
+      id={`post-${slug}`}
     >
       <div className="newsletter-card-image">
         {post.coverImage ? (
