@@ -47,7 +47,7 @@ export default function ActivityScreen() {
     const slug =
       post.link.split("/p/")[1] ?? post.guid.split("/p/")[1] ?? "post";
     sessionStorage.setItem("newsletter_post", JSON.stringify(post));
-    navigate(`/newsletter/${slug}`);
+    navigate(`/activity/${slug}`);
   };
 
   if (loading || instagramLoading) {

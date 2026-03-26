@@ -26,3 +26,136 @@
     transform: translateY(-20px);
   }
 }
+
+/* ----------------------------------- */
+
+/* ── Screen ── */
+.newsletter-screen {
+  width: 100%;
+  min-height: 100vh;
+  padding-top: 100px;
+  color: #f0ede6;
+}
+
+/* ── Header ── */
+.newsletter-header {
+  width: 100%;
+  padding: 4rem 2rem 3rem;
+  text-align: center;
+}
+
+.newsletter-header-inner {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.newsletter-tag {
+  display: inline-block;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #d7a339;
+  border: 1px solid #d7a33950;
+  padding: 4px 14px;
+  border-radius: 100px;
+  margin-bottom: 1.2rem;
+}
+
+.newsletter-title {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 900;
+  font-style: italic;
+  color: #f0ede6;
+  margin: 0 0 0.6rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.newsletter-subtitle {
+  font-family: "DM Sans", sans-serif;
+  font-size: 1rem;
+  color: #9a9a9a;
+  margin: 0;
+}
+
+/* ── Main ── */
+.newsletter-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem 6rem;
+}
+
+/* ── Loading ── */
+.newsletter-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 6rem 0;
+  font-family: "DM Sans", sans-serif;
+  color: #9a9a9a;
+}
+
+.loading-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.loading-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d7a339;
+  animation: dot-bounce 1.2s infinite ease-in-out;
+}
+
+.loading-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.loading-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes dot-bounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0.6);
+    opacity: 0.4;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.newsletter-error,
+.newsletter-empty {
+  font-family: "DM Sans", sans-serif;
+  text-align: center;
+  color: #9a9a9a;
+  padding: 4rem;
+}
+
+/* ── Grid ── */
+.newsletter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ── Responsivo ── */
+@media (max-width: 600px) {
+  .newsletter-header {
+    padding: 2rem 1rem;
+  }
+  .newsletter-main {
+    padding: 0 1rem 4rem;
+  }
+  .newsletter-grid {
+    grid-template-columns: 1fr;
+  }
+}

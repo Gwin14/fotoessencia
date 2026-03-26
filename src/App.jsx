@@ -16,7 +16,7 @@ import WIPScreen from "./screens/WIPScreen";
 import GaleryScreen from "./screens/GaleryScreen";
 import KomorebiScreen from "./screens/KomorebiScreen";
 import ActivityScreen from "./screens/ActivityScreen";
-import NewsletterScreen from "./screens/NewsletterScreen";
+
 import NewsletterPostScreen from "./screens/NewsletterPostScreen";
 
 const pageVariants = {
@@ -89,16 +89,9 @@ function AnimatedRoutes() {
             </Page>
           }
         />
+      
         <Route
-          path="/newsletter"
-          element={
-            <Page>
-              <NewsletterScreen />
-            </Page>
-          }
-        />
-        <Route
-          path="/newsletter/:slug"
+          path="/activity/:slug"
           element={
             <Page>
               <NewsletterPostScreen />
