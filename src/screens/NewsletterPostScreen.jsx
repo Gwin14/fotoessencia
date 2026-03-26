@@ -1,239 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./NewsletterPostScreen.css";
-
-function parseGalleryEmbed(node) {
-  try {
-    const raw = node.getAttribute("data-attrs");
-    if (!raw) return null;
-    const data = JSON.parse(raw);
-    const images = data?.gallery?.images ?? [];
-    const caption = data?.gallery?.caption ?? "";
-    return { images, caption };
-  } catch {
-    return null;
-  }
-}
-
-function VideoEmbed({ videoId }) {
-  // Nota: O Substack armazena vídeos internamente. Para este leitor web,
-  // usamos uma estrutura de vídeo padrão. Se o RSS não prover a URL direta,
-  // exibimos um placeholder estilizado ou tentamos reconstruir a URL.
-  return (
-    <div className="post-video-container">
-      <video
-        controls
-        className="post-video-player"
-        poster={`https://substack-post-media.s3.amazonaws.com/public/images/${videoId}_1920x1080.png`}
-      >
-        <source
-          src={`https://substack.com/api/v1/video/upload/${videoId}/src`}
-          type="video/mp4"
-        />
-        Seu navegador não suporta a reprodução de vídeos.
-      </video>
-    </div>
-  );
-}
-
-function decodeHtmlEntities(text) {
-  if (!text) return "";
-  const textarea = document.createElement("textarea");
-  textarea.innerHTML = text;
-  return textarea.value;
-}
-
-function GalleryEmbed({ images, caption }) {
-  const [current, setCurrent] = useState(0);
-
-  if (!images.length) return null;
-
-  return (
-    <div className="post-gallery">
-      <div className="post-gallery-main">
-        <img
-          src={images[current].src}
-          alt={caption || `Foto ${current + 1}`}
-          loading="lazy"
-        />
-        {images.length > 1 && (
-          <>
-            <button
-              className="post-gallery-btn post-gallery-prev"
-              onClick={() =>
-                setCurrent((c) => (c - 1 + images.length) % images.length)
-              }
-              aria-label="Anterior"
-            >
-              ‹
-            </button>
-            <button
-              className="post-gallery-btn post-gallery-next"
-              onClick={() => setCurrent((c) => (c + 1) % images.length)}
-              aria-label="Próxima"
-            >
-              ›
-            </button>
-            <div className="post-gallery-counter">
-              {current + 1} / {images.length}
-            </div>
-          </>
-        )}
-      </div>
-      {images.length > 1 && (
-        <div className="post-gallery-thumbs">
-          {images.map((img, i) => (
-            <button
-              key={i}
-              className={`post-gallery-thumb${i === current ? " active" : ""}`}
-              onClick={() => setCurrent(i)}
-            >
-              <img src={img.src} alt={`Miniatura ${i + 1}`} loading="lazy" />
-            </button>
-          ))}
-        </div>
-      )}
-      {caption && <p className="post-gallery-caption">{caption}</p>}
-    </div>
-  );
-}
-
-function PostContent({ html }) {
-  const containerRef = useRef(null);
-  const [nodes, setNodes] = useState([]);
-
-  useEffect(() => {
-    if (!html || !containerRef.current) return;
-
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, "text/html");
-
-    // Processa os filhos do body
-    const result = [];
-    let key = 0;
-
-    function processNode(el) {
-      if (el.nodeType === Node.TEXT_NODE) return null;
-      if (el.nodeType !== Node.ELEMENT_NODE) return null;
-
-      const tag = el.tagName.toLowerCase();
-
-      // Galeria embutida
-      if (tag === "div" && el.classList.contains("image-gallery-embed")) {
-        const gallery = parseGalleryEmbed(el);
-        if (gallery) {
-          return (
-            <GalleryEmbed
-              key={key++}
-              images={gallery.images}
-              caption={gallery.caption}
-            />
-          );
-        }
-        return null;
-      }
-
-      // Divisor
-      if (tag === "div") {
-        const inner = el.innerHTML.trim();
-        if (inner === "<hr>" || inner === "<hr/>") {
-          return <hr key={key++} className="post-divider" />;
-        }
-        // Div genérico — renderiza innerHTML
-        return (
-          <div key={key++} dangerouslySetInnerHTML={{ __html: el.innerHTML }} />
-        );
-      }
-
-      // Elementos normais
-      return React.createElement(el.tagName.toLowerCase(), {
-        key: key++,
-        dangerouslySetInnerHTML: { __html: el.innerHTML },
-      });
-    }
-
-    const children = Array.from(doc.body.children);
-    const mapped = children.map(processNode).filter(Boolean);
-    setNodes(mapped);
-  }, [html]);
-
-  // Renderização híbrida: galerias como React, resto como dangerouslySetInnerHTML
-  // mas dividindo pelo marcador de galeria
-  const renderContent = () => {
-    if (!html) return null;
-
-    // Regex expandido para capturar galerias E vídeos
-    const regex =
-      /<(div)[^>]*class="(image-gallery-embed|native-video-embed)"[^>]*data-attrs="([^"]*)"[^>]*>[\s\S]*?<\/div>/g;
-
-    const parts = [];
-    let lastIndex = 0;
-    let match;
-
-    while ((match = regex.exec(html)) !== null) {
-      // 1. Texto/HTML antes do elemento de mídia
-      if (match.index > lastIndex) {
-        parts.push({
-          type: "html",
-          content: html.slice(lastIndex, match.index),
-        });
-      }
-
-      const type = match[2]; // image-gallery-embed ou native-video-embed
-      const attrsRaw = match[3].replace(/&quot;/g, '"');
-
-      try {
-        const data = JSON.parse(attrsRaw);
-
-        if (type === "image-gallery-embed") {
-          parts.push({
-            type: "gallery",
-            images: data?.gallery?.images ?? [],
-            caption: data?.gallery?.caption ?? "",
-          });
-        } else if (type === "native-video-embed") {
-          // Extrai o ID do vídeo do arquivo RSS
-          parts.push({
-            type: "video",
-            videoId: data?.mediaUploadId,
-          });
-        }
-      } catch (e) {
-        parts.push({ type: "html", content: match[0] });
-      }
-
-      lastIndex = match.index + match[0].length;
-    }
-
-    if (lastIndex < html.length) {
-      parts.push({ type: "html", content: html.slice(lastIndex) });
-    }
-
-    return parts.map((part, i) => {
-      if (part.type === "gallery") {
-        return (
-          <GalleryEmbed key={i} images={part.images} caption={part.caption} />
-        );
-      }
-      if (part.type === "video") {
-        return <VideoEmbed key={i} videoId={part.videoId} />;
-      }
-      return (
-        <div
-          key={i}
-          className="post-html-block"
-          dangerouslySetInnerHTML={{ __html: part.content }}
-        />
-      );
-    });
-  };
-
-  return (
-    <div ref={containerRef} className="post-content">
-      {renderContent()}
-    </div>
-  );
-}
+import PostContent from "../components/NewsletterPostContent";
+import { formatDate, parseRSS } from "../utils/newsletterUtils";
 
 export default function NewsletterPostScreen() {
   const { slug } = useParams();
@@ -247,65 +16,34 @@ export default function NewsletterPostScreen() {
     if (stored) {
       try {
         const parsed = JSON.parse(stored);
-        setPost({
-          ...parsed,
-          title: decodeHtmlEntities(parsed.title),
-          description: decodeHtmlEntities(parsed.description),
-          creator: decodeHtmlEntities(parsed.creator),
-          link: decodeHtmlEntities(parsed.link),
-        });
+        // Os dados no sessionStorage já foram processados pelo parseRSS
+        // na tela anterior, então já estão limpos.
+        setPost(parsed);
         setLoading(false);
         return;
       } catch {}
     }
 
     // Fallback: busca o feed e acha pelo slug
-    fetch("/api/rss")
-      .then((r) => r.text())
-      .then((xmlText) => {
-        const parser = new DOMParser();
-        const xml = parser.parseFromString(xmlText, "text/xml");
-        const items = Array.from(xml.querySelectorAll("item"));
-
-        const found = items.find((item) => {
-          const link = item.querySelector("link")?.textContent ?? "";
-          return link.includes(slug);
-        });
-
-        if (found) {
-          const get = (tag) =>
-            decodeHtmlEntities(
-              found.querySelector(tag)?.textContent?.trim() ?? "",
-            );
-          const encoded = found.querySelector("encoded")?.textContent ?? "";
-          const enclosureUrl =
-            found.querySelector("enclosure")?.getAttribute("url") ?? "";
-
-          setPost({
-            title: get("title"),
-            description: get("description"),
-            link: get("link"),
-            pubDate: get("pubDate"),
-            creator: get("creator"),
-            coverImage: enclosureUrl,
-            content: encoded,
-          });
+    async function fetchAndSetPost() {
+      try {
+        const res = await fetch("/api/rss");
+        const xmlText = await res.text();
+        const parsedPosts = parseRSS(xmlText); // Usa a função parseRSS do utilitário
+        const foundPost = parsedPosts.find(
+          (p) => p.link.includes(slug) || p.guid.includes(slug),
+        );
+        if (foundPost) {
+          setPost(foundPost); // O post já vem decodificado e formatado
         }
-      })
-      .catch(console.error)
-      .finally(() => setLoading(false));
+      } catch (err) {
+        console.error("Erro ao buscar post da newsletter:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchAndSetPost();
   }, [slug]);
-
-  const formatDate = (dateStr) => {
-    if (!dateStr) return "";
-    const d = new Date(dateStr);
-    return d.toLocaleDateString("pt-BR", {
-      weekday: "long",
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-    });
-  };
 
   if (loading) {
     return (
