@@ -6,6 +6,7 @@
   padding: 16px;
   --outer-r: 24px;
   --p-distance: 12px;
+  border: none;
 }
 
 .carousel-track {
@@ -24,10 +25,19 @@
   background-color: #0d0716;
   overflow: hidden;
   cursor: grab;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .carousel-item:active {
   cursor: grabbing;
+}
+
+.carousel-item:hover {
+  transform: translateY(-6px);
+  border-color: #d7a339;
+  box-shadow: 5px 20px 20px rgba(33, 32, 32, 0.5);
 }
 
 .carousel-container.round {
