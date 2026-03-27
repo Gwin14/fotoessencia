@@ -133,14 +133,20 @@ export default function NewsletterPostScreen() {
         <footer className="post-footer">
           <div className="post-footer-inner">
             <p>Gostou desta publicação?</p>
-            <a
-              href="https://fotoessencia.substack.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="post-subscribe-btn"
-            >
-              Assinar a newsletter
-            </a>
+            <iframe
+              src="https://fotoessencia.substack.com/embed"
+              width="100%"
+              height="150"
+              style={{
+                border: "1px solid #EEE",
+                background: "white",
+                maxWidth: "95vw",
+                width: "100%",
+                margin: "0 auto",
+              }}
+              frameBorder="0"
+              scrolling="no"
+            ></iframe>
           </div>
         </footer>
       </div>

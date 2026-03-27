@@ -197,6 +197,20 @@ export default function ActivityScreen() {
                     />
                   );
                 })}
+
+                <iframe
+                  src="https://fotoessencia.substack.com/embed"
+                  width="100%"
+                  height="100%"
+                  style={{
+                    border: " 1px solid #cdcdbe",
+                    background: "white",
+                    borderRadius: "16px",
+                    // margin: " auto",
+                  }}
+                  frameBorder="0"
+                  scrolling="no"
+                />
               </div>
             </div>
           </section>
