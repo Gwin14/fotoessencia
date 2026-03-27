@@ -150,13 +150,11 @@ export default function ActivityScreen() {
           </section>
 
           <section
-            className="newsletter-section"
+            className=" newsletter-section"
             style={{ marginTop: "200px" }}
           >
             <div className="blur-text-div">
               <BlurText text="Newsletter" />
-              <br />
-              <BlurText text="Foto Essência" />
             </div>
 
             <div className="newsletter-main">

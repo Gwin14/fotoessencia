@@ -37,6 +37,26 @@
   color: #f0ede6;
 }
 
+.newsletter-section {
+  transform: translateY(200px);
+
+  .blur-text-div {
+    p {
+      font-size: 3.5rem;
+      font-weight: bold;
+      font-family: "Rubik Mono One", monospace;
+      padding: 0px !important;
+      margin: 0px !important;
+    }
+
+    /* Estilos para o segundo p */
+    p:nth-of-type(2) {
+      font-size: 5rem;
+      transform: translateY(-20px);
+    }
+  }
+}
+
 /* ── Header ── */
 .newsletter-header {
   width: 100%;
@@ -157,5 +177,30 @@
   }
   .newsletter-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .activity-title {
+    transform: translateY(150px);
+    flex-direction: column;
+
+    p {
+      font-size: 1.5rem;
+    }
+
+    p:nth-of-type(2) {
+      font-size: 2.5rem;
+    }
+  }
+
+  .newsletter-section {
+    transform: translateY(150px);
+
+    .blur-text-div {
+      p {
+        font-size: 2.5rem;
+      }
+    }
   }
 }

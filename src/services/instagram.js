@@ -93,7 +93,7 @@ export async function fetchInstagramData() {
   const result = {
     media: allMedia,
     images: allMedia
-      .filter((i) => i.media_type === "IMAGE")
+      // .filter((i) => i.media_type === "IMAGE")
       .map((i) => i.media_url),
     profileInfo: {
       profilePicture: profileRaw.profile_picture_url,
