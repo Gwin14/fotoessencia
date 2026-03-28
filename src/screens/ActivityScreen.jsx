@@ -9,6 +9,7 @@ import BlurText from "../components/BlurText";
 import SpotlightCard from "../components/SpotlightCard";
 import NewsletterCard from "../components/NewsletterCard";
 import { parseRSS, formatDate } from "../utils/newsletterUtils";
+import { p } from "framer-motion/client";
 
 const pageVariants = {
   initial: { opacity: 0, y: 30 },
@@ -128,21 +129,21 @@ export default function ActivityScreen() {
             </div>
           </section>
 
-          <section
-            className="activity-title instagram-section"
-            style={{ marginTop: "200px" }}
-          >
-            <div
-              style={{
-                minHeight: "300px",
-                maxHeight: "600px",
-                position: "relative",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+          {images && images.length > 0 && (
+            <section
+              className="activity-title instagram-section"
+              style={{ marginTop: "200px" }}
             >
-              {images && images.length > 0 ? (
+              <div
+                style={{
+                  minHeight: "300px",
+                  maxHeight: "600px",
+                  position: "relative",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <SpotlightCard
                   className="custom-spotlight-card"
                   spotlightColor="rgba(255, 255, 255, 0.52)"
@@ -157,17 +158,15 @@ export default function ActivityScreen() {
                     }}
                   />
                 </SpotlightCard>
-              ) : (
-                <p>Nenhum post do Instagram encontrado.</p>
-              )}
-            </div>
+              </div>
 
-            <div className="blur-text-div">
-              <BlurText text="Último" />
-              <br />
-              <BlurText text="Post" />
-            </div>
-          </section>
+              <div className="blur-text-div">
+                <BlurText text="Último" />
+                <br />
+                <BlurText text="Post" />
+              </div>
+            </section>
+          )}
 
           <section
             className=" newsletter-section"
