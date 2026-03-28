@@ -1,3 +1,5 @@
+![Foto Essência](public/banner.jpeg)
+
 # Foto Essência
 
 > Portfolio fotográfico pessoal — praias, cidades, animais e momentos capturados pelo litoral de Santa Catarina e além.
