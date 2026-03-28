@@ -27,6 +27,22 @@
   }
 }
 
+.youtube-section {
+ p {
+    font-size: 2.5rem;
+    font-weight: bold;
+    font-family: "Rubik Mono One", monospace;
+    padding: 0px !important;
+    margin: 0px !important;
+  }
+
+  /* Estilos para o segundo p */
+  p:nth-of-type(2) {
+    font-size: 3rem;
+    transform: translateY(-20px);
+  }
+}
+
 /* ----------------------------------- */
 
 /* ── Screen ── */
@@ -180,22 +196,32 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1000px) {
   .activity-title {
     transform: translateY(150px);
     flex-direction: column;
 
     p {
-      font-size: 1.5rem;
+      font-size: 2.3rem;
     }
 
     p:nth-of-type(2) {
-      font-size: 2.5rem;
+      font-size: 4rem;
     }
   }
 
+  .activity-title.instagram-section {
+    flex-direction: column-reverse !important;
+
+    img {
+      max-width: 80vw !important;
+    }
+
+    transform: translateY(50px);
+  }
+
   .newsletter-section {
-    transform: translateY(150px);
+    transform: translateY(0px);
 
     .blur-text-div {
       p {

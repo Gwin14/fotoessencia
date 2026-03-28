@@ -24,6 +24,22 @@ export default function ActivityScreen() {
   const [newsletterLoading, setNewsletterLoading] = useState(true);
   const [newsletterError, setNewsletterError] = useState(null);
 
+  const [carouselWidth, setCarouselWidth] = useState(600);
+
+  useEffect(() => {
+    function handleResize() {
+      const width = window.innerWidth;
+
+      if (width < 600) setCarouselWidth(width * 0.9);
+      else if (width < 1000) setCarouselWidth(width * 0.8);
+      else setCarouselWidth(600);
+    }
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   useEffect(() => {
     async function loadFeed() {
       try {
@@ -82,7 +98,7 @@ export default function ActivityScreen() {
           exit="exit"
           transition={pageTransition}
         >
-          <section className="activity-title">
+          <section className="activity-title youtube-section">
             <div className="blur-text-div">
               <BlurText text="Atividade" />
               <br />
@@ -101,7 +117,7 @@ export default function ActivityScreen() {
             >
               <Carousel
                 items={videos || []}
-                baseWidth={600}
+                baseWidth={carouselWidth}
                 autoplay={true}
                 autoplayDelay={5000}
                 pauseOnHover={true}
@@ -134,7 +150,11 @@ export default function ActivityScreen() {
                   <img
                     src={images[0]}
                     alt="Post do Instagram"
-                    style={{ maxWidth: "40vw", borderRadius: 12 }}
+                    style={{
+                      maxWidth: "40vw",
+                      borderRadius: 12,
+                      height: "100%",
+                    }}
                   />
                 </SpotlightCard>
               ) : (
