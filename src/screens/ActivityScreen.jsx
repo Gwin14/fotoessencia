@@ -8,7 +8,7 @@ import Carousel from "../components/Carousel";
 import BlurText from "../components/BlurText";
 import SpotlightCard from "../components/SpotlightCard";
 import NewsletterCard from "../components/NewsletterCard";
-import { parseRSS, formatDate } from "../utils/newsletterUtils";
+import { formatDate } from "../utils/newsletterUtils";
 import { p } from "framer-motion/client";
 
 const pageVariants = {
@@ -44,10 +44,26 @@ export default function ActivityScreen() {
   useEffect(() => {
     async function loadFeed() {
       try {
-        const res = await fetch("/api/rss");
-        const xmlText = await res.text();
-        const parsed = parseRSS(xmlText);
-        setPosts(parsed);
+        const res = await fetch(
+          "https://api.rss2json.com/v1/api.json?rss_url=https://fotoessencia.substack.com/feed",
+        );
+        const data = await res.json();
+        if (data.status === "ok") {
+          const posts = data.items.map((item) => ({
+            title: item.title,
+            description: item.description,
+            link: item.link,
+            guid: item.guid,
+            pubDate: item.pubDate,
+            creator: item.author,
+            coverImage: item.thumbnail || item.enclosure?.link,
+            excerpt: item.description?.slice(0, 200) + "…",
+            content: item.content,
+          }));
+          setPosts(posts);
+        } else {
+          throw new Error("Failed to fetch RSS");
+        }
       } catch (err) {
         console.error(err);
         setNewsletterError("Não foi possível carregar os posts.");

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./NewsletterPostScreen.css";
 import PostContent from "../components/NewsletterPostContent";
-import { formatDate, parseRSS } from "../utils/newsletterUtils";
+import { formatDate } from "../utils/newsletterUtils";
 
 export default function NewsletterPostScreen() {
   const { slug } = useParams();
@@ -27,14 +27,28 @@ export default function NewsletterPostScreen() {
     // Fallback: busca o feed e acha pelo slug
     async function fetchAndSetPost() {
       try {
-        const res = await fetch("/api/rss");
-        const xmlText = await res.text();
-        const parsedPosts = parseRSS(xmlText); // Usa a função parseRSS do utilitário
-        const foundPost = parsedPosts.find(
-          (p) => p.link.includes(slug) || p.guid.includes(slug),
+        const res = await fetch(
+          "https://api.rss2json.com/v1/api.json?rss_url=https://fotoessencia.substack.com/feed",
         );
-        if (foundPost) {
-          setPost(foundPost); // O post já vem decodificado e formatado
+        const data = await res.json();
+        if (data.status === "ok") {
+          const posts = data.items.map((item) => ({
+            title: item.title,
+            description: item.description,
+            link: item.link,
+            guid: item.guid,
+            pubDate: item.pubDate,
+            creator: item.author,
+            coverImage: item.thumbnail || item.enclosure?.link,
+            excerpt: item.description?.slice(0, 200) + "…",
+            content: item.content,
+          }));
+          const foundPost = posts.find(
+            (p) => p.link.includes(slug) || p.guid.includes(slug),
+          );
+          if (foundPost) {
+            setPost(foundPost);
+          }
         }
       } catch (err) {
         console.error("Erro ao buscar post da newsletter:", err);

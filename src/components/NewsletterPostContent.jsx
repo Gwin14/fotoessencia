@@ -1,21 +1,9 @@
 import React, { useState } from "react";
 
-function parseGalleryEmbed(node) {
-  try {
-    const raw = node.getAttribute("data-attrs");
-    if (!raw) return null;
-    const data = JSON.parse(raw);
-    const images = data?.gallery?.images ?? [];
-    const caption = data?.gallery?.caption ?? "";
-    return { images, caption };
-  } catch {
-    return null;
-  }
-}
-
+// Componente de Galeria (Mantido)
 function GalleryEmbed({ images, caption }) {
   const [current, setCurrent] = useState(0);
-  if (!images.length) return null;
+  if (!images || !images.length) return null;
 
   return (
     <div className="post-gallery">
@@ -65,21 +53,46 @@ function GalleryEmbed({ images, caption }) {
   );
 }
 
+// Componente de Vídeo (ATUALIZADO)
 function VideoEmbed({ videoId }) {
-  // Nota: O Substack armazena vídeos internamente. Para este leitor web,
-  // usamos uma estrutura de vídeo padrão. Se o RSS não prover a URL direta,
-  // exibimos um placeholder estilizado ou tentamos reconstruir a URL.
+  if (!videoId) return null;
+
+  // URL direta para o arquivo de vídeo
+  const videoUrl = `https://substack.com/api/v1/video/upload/${videoId}/src.mp4`;
+
+  // URL da miniatura (poster) - Usando uma versão que costuma falhar menos
+  const posterUrl = `https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F${videoId}_1920x1080.png`;
+
   return (
-    <div className="post-video-container">
+    <div
+      className="post-video-container"
+      style={{
+        margin: "2rem 0",
+        backgroundColor: "#000",
+        borderRadius: "12px",
+        overflow: "hidden",
+      }}
+    >
+      <p style={{ color: "#fffff6" }}>
+        Vídeos ainda não estão disponíveis aqui, mas você ainda pode assistir no{" "}
+        <a
+          href="https://fotoessencia.substack.com"
+          target="blank"
+          style={{ color: "#ffaa00" }}
+        >
+          Substack
+        </a>{" "}
+        :)
+      </p>
       <video
         controls
-        className="post-video-player"
-        poster={`https://substack-post-media.s3.amazonaws.com/public/images/${videoId}_1920x1080.png`}
+        playsInline
+        preload="metadata"
+        crossOrigin="anonymous"
+        poster={posterUrl}
+        style={{ width: "100%", display: "block" }}
       >
-        <source
-          src={`https://substack.com/api/v1/video/upload/${videoId}/src`}
-          type="video/mp4"
-        />
+        <source src={videoUrl} type="video/mp4" />
         Seu navegador não suporta a reprodução de vídeos.
       </video>
     </div>
@@ -91,34 +104,44 @@ export default function PostContent({ html }) {
 
   const parts = [];
   let lastIndex = 0;
-  const regex =
-    /<(div)[^>]*class="(image-gallery-embed|native-video-embed)"[^>]*data-attrs="([^"]*)"[^>]*>[\s\S]*?<\/div>/g;
+
+  // Regex robusta para capturar embeds de Galeria e Vídeo
+  const embedRegex =
+    /<div[^>]*class=["']+(image-gallery-embed|native-video-embed)["']+.+?data-attrs=["']+(\{.*?\})["']+.+?<\/div>/g;
 
   let match;
-  while ((match = regex.exec(html)) !== null) {
+  while ((match = embedRegex.exec(html)) !== null) {
     if (match.index > lastIndex) {
       parts.push({ type: "html", content: html.slice(lastIndex, match.index) });
     }
+
     try {
-      const type = match[2]; // image-gallery-embed ou native-video-embed
-      const attrsRaw = match[3].replace(/&quot;/g, '"');
+      const type = match[1];
+      let attrsRaw = match[2]
+        .replace(/&quot;/g, '"')
+        .trim()
+        .replace(/^'|'$/g, "");
       const data = JSON.parse(attrsRaw);
 
       if (type === "image-gallery-embed") {
         parts.push({
           type: "gallery",
-          images: data?.gallery?.images ?? [],
-          caption: data?.gallery?.caption ?? "",
+          images: data?.gallery?.images || [],
+          caption: data?.gallery?.caption || "",
         });
       } else if (type === "native-video-embed") {
+        // O ID pode estar em mediaUploadId ou dentro de um objeto video
         parts.push({
           type: "video",
-          videoId: data?.mediaUploadId,
+          videoId: data?.mediaUploadId || data?.video?.id,
+          videoUrl: data?.video?.url || null,
         });
       }
-    } catch {
+    } catch (e) {
+      console.error("Erro no parse do embed:", e);
       parts.push({ type: "html", content: match[0] });
     }
+
     lastIndex = match.index + match[0].length;
   }
 
@@ -128,19 +151,29 @@ export default function PostContent({ html }) {
 
   return (
     <div className="post-content">
-      {parts.map((part, i) =>
-        part.type === "gallery" ? (
-          <GalleryEmbed key={i} images={part.images} caption={part.caption} />
-        ) : part.type === "video" ? (
-          <VideoEmbed key={i} videoId={part.videoId} />
-        ) : (
+      {parts.map((part, i) => {
+        if (part.type === "gallery") {
+          return (
+            <GalleryEmbed key={i} images={part.images} caption={part.caption} />
+          );
+        }
+        if (part.type === "video") {
+          return (
+            <VideoEmbed
+              key={i}
+              videoId={part.videoId}
+              videoUrl={part.videoUrl}
+            />
+          );
+        }
+        return (
           <div
             key={i}
             className="post-html-block"
             dangerouslySetInnerHTML={{ __html: part.content }}
           />
-        ),
-      )}
+        );
+      })}
     </div>
   );
 }

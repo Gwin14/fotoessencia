@@ -20,7 +20,7 @@ export default function Header() {
         />
         <Link to="/">Sobre</Link>
         <Link to="/galery">Galeria</Link>
-        {/* <Link to="/activity">Atividades</Link> */}
+        <Link to="/activity">Atividades</Link>
         <Link to="/Komorebi">Komorebi</Link>
       </nav>
 
@@ -37,9 +37,9 @@ export default function Header() {
         <Link to="/galery" title="Galeria">
           <FaImages size={24} color="#fff" />
         </Link>
-        {/* <Link to="/activity" title="Atividades">
+        <Link to="/activity" title="Atividades">
           <FaNewspaper size={24} color="#fff" />
-        </Link> */}
+        </Link>
         <Link to="/Komorebi" title="App Komorebi">
           <FaAppStore size={24} color="#fff" />
         </Link>
