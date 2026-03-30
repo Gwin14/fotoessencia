@@ -2,6 +2,7 @@ import "./GaleryScreen.css";
 import { useInstagram } from "../context/InstagramContext";
 import { useState } from "react";
 import SplitText from "../components/SplitText";
+import { Helmet } from "react-helmet-async";
 
 export default function GaleryScreen() {
   const { images, profileInfo, media } = useInstagram();
@@ -13,6 +14,11 @@ export default function GaleryScreen() {
 
   return (
     <div className="galery-screen">
+      <Helmet>
+        <title>Galeria | Foto Essência</title>
+        <meta name="description" content="Conheça a minha galeria de fotos" />
+      </Helmet>
+
       <SplitText
         tag="h1"
         text="A Galeria"

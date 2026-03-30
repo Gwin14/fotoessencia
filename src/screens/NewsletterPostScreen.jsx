@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import "./NewsletterPostScreen.css";
 import PostContent from "../components/NewsletterPostContent";
 import { formatDate } from "../utils/newsletterUtils";
+import { Helmet } from "react-helmet-async";
 
 export default function NewsletterPostScreen() {
   const { slug } = useParams();
@@ -56,6 +57,7 @@ export default function NewsletterPostScreen() {
         setLoading(false);
       }
     }
+
     fetchAndSetPost();
   }, [slug]);
 
@@ -90,6 +92,27 @@ export default function NewsletterPostScreen() {
 
   return (
     <div className="post-screen">
+      <Helmet>
+        <title>
+          {post?.title
+            ? `${post.title.split("|")[0].trim()} | Foto Essência`
+            : "Foto Essência"}
+        </title>{" "}
+        <meta name="description" content={post.description || post.excerpt} />
+        {post.coverImage && (
+          <meta property="og:image" content={post.coverImage} />
+        )}
+        <meta property="og:title" content={post.title} />
+        <meta
+          property="og:description"
+          content={post.description || post.excerpt}
+        />
+        <meta
+          property="og:url"
+          content={`https://fotoessencia.fabiosantos.dev.br/activity/${slug}`}
+        />
+      </Helmet>
+
       {/* Hero com imagem de capa */}
       {post.coverImage && (
         <div className="post-hero">

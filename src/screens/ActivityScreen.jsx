@@ -10,6 +10,7 @@ import SpotlightCard from "../components/SpotlightCard";
 import NewsletterCard from "../components/NewsletterCard";
 import { formatDate } from "../utils/newsletterUtils";
 import { p } from "framer-motion/client";
+import { Helmet } from "react-helmet-async";
 
 const pageVariants = {
   initial: { opacity: 0, y: 30 },
@@ -103,6 +104,14 @@ export default function ActivityScreen() {
 
   return (
     <div className="activity-screen">
+      <Helmet>
+        <title>Atividades | Foto Essência</title>
+        <meta
+          name="description"
+          content="Saiba dos últimos conteúdos publicados"
+        />
+      </Helmet>
+
       <AnimatePresence
         mode="wait"
         onExitComplete={() => window.scrollTo({ top: 0 })}

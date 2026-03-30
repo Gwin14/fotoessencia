@@ -2,7 +2,7 @@ import RotatingText from "../components/RotatingText";
 import "./KomorebiScreen.css";
 import BlurText from "../components/BlurText";
 import { FaApple, FaGooglePlay } from "react-icons/fa";
-
+import { Helmet } from "react-helmet-async";
 import iconeKomorebi from "../assets/image/iconeKomorebi.png";
 import videoKomorebi from "../assets/video/video.MP4";
 import mockupTriple from "../assets/mockupTriple.png";
@@ -11,6 +11,11 @@ export default function KomorebiScreen() {
   return (
     <>
       <div className="komorebi-container">
+        <Helmet>
+          <title>Komorebi | Foto Essência</title>
+          <meta name="description" content="O seu app pessoal de câmera" />
+        </Helmet>
+
         <img
           className="komorebi-icon"
           src={iconeKomorebi}

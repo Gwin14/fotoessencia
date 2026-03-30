@@ -16,8 +16,9 @@ import WIPScreen from "./screens/WIPScreen";
 import GaleryScreen from "./screens/GaleryScreen";
 import KomorebiScreen from "./screens/KomorebiScreen";
 import ActivityScreen from "./screens/ActivityScreen";
-
 import NewsletterPostScreen from "./screens/NewsletterPostScreen";
+
+import { HelmetProvider } from "react-helmet-async";
 
 const pageVariants = {
   initial: { opacity: 0, y: 30 },
@@ -89,7 +90,7 @@ function AnimatedRoutes() {
             </Page>
           }
         />
-      
+
         <Route
           path="/activity/:slug"
           element={
@@ -105,29 +106,31 @@ function AnimatedRoutes() {
 
 function App() {
   return (
-    <YoutubeProvider>
-      <InstagramProvider>
-        <Router>
-          <ClickSpark
-            sparkColor="white"
-            sparkSize={10}
-            sparkRadius={15}
-            sparkCount={8}
-            duration={400}
-          >
-            <Squares
-              speed={0.1}
-              squareSize={40}
-              direction="diagonal"
-              borderColor="#75757533"
-              hoverFillColor="#75757533"
-            />
-            <Header />
-            <AnimatedRoutes />
-          </ClickSpark>
-        </Router>
-      </InstagramProvider>
-    </YoutubeProvider>
+    <HelmetProvider>
+      <YoutubeProvider>
+        <InstagramProvider>
+          <Router>
+            <ClickSpark
+              sparkColor="white"
+              sparkSize={10}
+              sparkRadius={15}
+              sparkCount={8}
+              duration={400}
+            >
+              <Squares
+                speed={0.1}
+                squareSize={40}
+                direction="diagonal"
+                borderColor="#75757533"
+                hoverFillColor="#75757533"
+              />
+              <Header />
+              <AnimatedRoutes />
+            </ClickSpark>
+          </Router>
+        </InstagramProvider>
+      </YoutubeProvider>
+    </HelmetProvider>
   );
 }
 
