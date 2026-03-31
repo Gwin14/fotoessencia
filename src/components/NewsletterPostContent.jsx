@@ -53,46 +53,32 @@ function GalleryEmbed({ images, caption }) {
   );
 }
 
-// Componente de Vídeo (ATUALIZADO)
 function VideoEmbed({ videoId }) {
-  if (!videoId) return null;
+  // A URL de 'src' que você já validou que funciona
+  const videoSrc = `https://substack.com/api/v1/video/upload/${videoId}/src`;
 
-  // URL direta para o arquivo de vídeo
-  const videoUrl = `https://substack.com/api/v1/video/upload/${videoId}/src.mp4`;
-
-  // URL da miniatura (poster) - Usando uma versão que costuma falhar menos
-  const posterUrl = `https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F${videoId}_1920x1080.png`;
+  // Para a thumbnail do PRÓPRIO vídeo:
+  // O Substack geralmente expõe a thumb através deste endpoint de processamento:
+  const videoThumbnail = `https://substack.com/api/v1/video/upload/${videoId}/thumbnail?width=1920&height=1080&format=jpg`;
 
   return (
     <div
       className="post-video-container"
-      style={{
-        margin: "2rem 0",
-        backgroundColor: "#000",
-        borderRadius: "12px",
-        overflow: "hidden",
-      }}
+      style={{ margin: "20px 0", width: "100%" }}
     >
-      <p style={{ color: "#fffff6" }}>
-        Vídeos ainda não estão disponíveis aqui, mas você ainda pode assistir no{" "}
-        <a
-          href="https://fotoessencia.substack.com"
-          target="blank"
-          style={{ color: "#ffaa00" }}
-        >
-          Substack
-        </a>{" "}
-        :)
-      </p>
       <video
         controls
-        playsInline
-        preload="metadata"
-        crossOrigin="anonymous"
-        poster={posterUrl}
-        style={{ width: "100%", display: "block" }}
+        className="post-video-player"
+        poster={videoThumbnail} // Agora aponta para a thumb dinâmica do vídeo
+        style={{
+          width: "100%",
+          borderRadius: "12px",
+          display: "block",
+          aspectRatio: "16 / 9", // Garante o espaço antes do load
+          backgroundColor: "#000",
+        }}
       >
-        <source src={videoUrl} type="video/mp4" />
+        <source src={videoSrc} type="video/mp4" />
         Seu navegador não suporta a reprodução de vídeos.
       </video>
     </div>
