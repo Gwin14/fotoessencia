@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import { FaUser, FaImages, FaAppStore, FaNewspaper } from "react-icons/fa";
@@ -6,22 +6,31 @@ import { useInstagram } from "../context/InstagramContext";
 
 export default function Header() {
   const { profileInfo } = useInstagram();
+  const [collapsed, setCollapsed] = useState(true);
 
   const defaultPic = "https://via.placeholder.com/40x40/444/FFFFFF?text=•";
 
   return (
-    <header className="header">
+    <header className={`header ${collapsed ? "" : "collapsed"}`}>
       {/* Navegação desktop */}
-      <nav className="header-nav pc">
+      <nav className={"header-nav pc"}>
         <img
           src={profileInfo?.profilePicture || defaultPic}
           alt="Foto de perfil"
           className="headerPic"
+          onClick={() => {
+            setCollapsed(!collapsed);
+          }}
         />
-        <Link to="/">Sobre</Link>
-        <Link to="/galery">Galeria</Link>
-        <Link to="/activity">Atividades</Link>
-        <Link to="/Komorebi">Komorebi</Link>
+
+        {collapsed && (
+          <>
+            <Link to="/">Sobre</Link>
+            <Link to="/galery">Galeria</Link>
+            <Link to="/activity">Atividades</Link>
+            <Link to="/Komorebi">Komorebi</Link>
+          </>
+        )}
       </nav>
 
       {/* Navegação mobile */}
@@ -30,19 +39,27 @@ export default function Header() {
           src={profileInfo?.profilePicture || defaultPic}
           alt="Foto de perfil"
           className="headerPic"
+          onClick={() => {
+            setCollapsed(!collapsed);
+          }}
         />
-        <Link to="/" title="Sobre">
-          <FaUser size={24} color="#fff" />
-        </Link>
-        <Link to="/galery" title="Galeria">
-          <FaImages size={24} color="#fff" />
-        </Link>
-        <Link to="/activity" title="Atividades">
-          <FaNewspaper size={24} color="#fff" />
-        </Link>
-        <Link to="/Komorebi" title="App Komorebi">
-          <FaAppStore size={24} color="#fff" />
-        </Link>
+
+        {collapsed && (
+          <>
+            <Link to="/" title="Sobre">
+              <FaUser size={24} color="#fff" />
+            </Link>
+            <Link to="/galery" title="Galeria">
+              <FaImages size={24} color="#fff" />
+            </Link>
+            <Link to="/activity" title="Atividades">
+              <FaNewspaper size={24} color="#fff" />
+            </Link>
+            <Link to="/Komorebi" title="App Komorebi">
+              <FaAppStore size={24} color="#fff" />
+            </Link>
+          </>
+        )}
       </nav>
     </header>
   );
