@@ -85,15 +85,47 @@ function VideoEmbed({ videoId }) {
   );
 }
 
+function YouTubeEmbed({ videoId, startTime, endTime }) {
+  if (!videoId) return null;
+
+  const src = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&autoplay=0&showinfo=0&enablejsapi=0${
+    startTime ? `&start=${startTime}` : ""
+  }${endTime ? `&end=${endTime}` : ""}`;
+
+  return (
+    <div
+      className="post-youtube-container"
+      style={{ margin: "20px 0", width: "100%" }}
+    >
+      <iframe
+        src={src}
+        frameBorder="0"
+        loading="lazy"
+        gesture="media"
+        allow="autoplay; fullscreen"
+        allowFullScreen
+        style={{
+          width: "100%",
+          borderRadius: "12px",
+          display: "block",
+          aspectRatio: "16 / 9",
+          backgroundColor: "#000",
+        }}
+        title="YouTube video"
+      />
+    </div>
+  );
+}
+
 export default function PostContent({ html }) {
   if (!html) return null;
 
   const parts = [];
   let lastIndex = 0;
 
-  // Regex robusta para capturar embeds de Galeria e Vídeo
+  // Regex robusta para capturar embeds de Galeria, Vídeo e YouTube
   const embedRegex =
-    /<div[^>]*class=["']+(image-gallery-embed|native-video-embed)["']+.+?data-attrs=["']+(\{.*?\})["']+.+?<\/div>/g;
+    /<div[^>]*class=["']+(image-gallery-embed|native-video-embed|youtube-wrap)["']+.+?data-attrs=["']+(\{.*?\})["']+.+?<\/div>/g;
 
   let match;
   while ((match = embedRegex.exec(html)) !== null) {
@@ -122,6 +154,13 @@ export default function PostContent({ html }) {
           videoId: data?.mediaUploadId || data?.video?.id,
           videoUrl: data?.video?.url || null,
         });
+      } else if (type === "youtube-wrap") {
+        parts.push({
+          type: "youtube",
+          videoId: data?.videoId,
+          startTime: data?.startTime,
+          endTime: data?.endTime,
+        });
       }
     } catch (e) {
       console.error("Erro no parse do embed:", e);
@@ -149,6 +188,16 @@ export default function PostContent({ html }) {
               key={i}
               videoId={part.videoId}
               videoUrl={part.videoUrl}
+            />
+          );
+        }
+        if (part.type === "youtube") {
+          return (
+            <YouTubeEmbed
+              key={i}
+              videoId={part.videoId}
+              startTime={part.startTime}
+              endTime={part.endTime}
             />
           );
         }

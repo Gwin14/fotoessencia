@@ -381,6 +381,23 @@
   accent-color: #d7a339;
 }
 
+/* ── YouTube embed ── */
+.post-youtube-container {
+  margin: 2rem 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0d0d0d;
+  border: 1px solid #e8e6df;
+  position: relative;
+}
+
+.post-youtube-container iframe {
+  width: 100%;
+  display: block;
+  max-height: 70vh;
+  background: #0d0d0d;
+}
+
 /* ── Divisor ── */
 .post-divider {
   border: none;
