@@ -23,9 +23,9 @@
 .post-not-found button {
   margin-top: 1rem;
   padding: 10px 24px;
-  border: 1px solid #d7a339;
+  border: 1px solid var(--color-primary);
   background: transparent;
-  color: #d7a339;
+  color: var(--color-primary);
   font-family: "DM Sans", sans-serif;
   font-size: 0.9rem;
   border-radius: 8px;
@@ -36,8 +36,27 @@
 }
 
 .post-not-found button:hover {
-  background: #d7a339;
+  background: var(--color-primary);
   color: #fff;
+}
+
+.button-wrapper {
+  background: var(--color-primary);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  max-width: max-content;
+
+  a span {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: 10px 24px;
+  }
+}
+
+.button-wrapper:hover {
+  background: #de9400;
 }
 
 /* ── Loading dots ── */
@@ -50,7 +69,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #d7a339;
+  background: var(--color-primary);
   animation: dot-bounce 1.2s infinite ease-in-out;
 }
 
@@ -139,7 +158,7 @@
 }
 
 .post-back-btn:hover {
-  color: #d7a339;
+  color: var(--color-primary);
 }
 
 /* ── Post header ── */
@@ -160,8 +179,8 @@
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #d7a339;
-  border: 1px solid #d7a33950;
+  color: var(--color-primary);
+  border: 1px solid #ffaa0050;
   padding: 3px 10px;
   border-radius: 100px;
 }
@@ -205,7 +224,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #d7a339, #a07820);
+  background-color: var(--color-primary);
   color: #fff;
   font-size: 0.7rem;
   font-weight: 700;
@@ -261,13 +280,13 @@
 }
 
 .post-html-block a {
-  color: #d7a339;
+  color: var(--color-primary);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
 .post-html-block blockquote {
-  border-left: 3px solid #d7a339;
+  border-left: 3px solid var(--color-primary);
   margin: 1.5rem 0;
   padding: 0.5rem 0 0.5rem 1.5rem;
   font-style: italic;
@@ -277,11 +296,11 @@
 .post-html-block ul,
 .post-html-block ol {
   padding-left: 1.5rem;
-  margin: 0 0 1.4em;
+  margin: 1.4em 0;
 }
 
 .post-html-block li {
-  margin-bottom: 0.4em;
+  /* margin: 0em 0; */
 }
 
 .post-html-block strong {
@@ -378,7 +397,7 @@
   display: block;
   max-height: 70vh;
   background: #0d0d0d;
-  accent-color: #d7a339;
+  accent-color: var(--color-primary);
 }
 
 /* ── YouTube embed ── */
@@ -498,7 +517,7 @@
 }
 
 .post-gallery-thumb.active {
-  border-color: #d7a339;
+  border-color: var(--color-primary);
   opacity: 1;
 }
 
@@ -549,7 +568,7 @@
 .post-subscribe-btn {
   display: inline-block;
   padding: 12px 32px;
-  background: #d7a339;
+  background: var(--color-primary);
   color: #fff;
   font-family: "DM Sans", sans-serif;
   font-size: 0.9rem;

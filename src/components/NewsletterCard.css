@@ -25,7 +25,7 @@
 
 .newsletter-card:hover {
   transform: translateY(-6px);
-  border-color: #d7a339;
+  border-color: var(--color-primary);
   box-shadow: 0 20px 60px rgba(212, 206, 206, 0.5);
 }
 
@@ -83,7 +83,7 @@
 }
 
 .newsletter-card-author {
-  color: #d7a339;
+  color: var(--color-primary);
   font-weight: 500;
 }
 
@@ -115,7 +115,7 @@
   font-family: "DM Sans", sans-serif;
   font-size: 0.8rem;
   font-weight: 500;
-  color: #d7a339;
+  color: var(--color-primary);
   letter-spacing: 0.05em;
   transition: gap 0.2s ease;
 }
