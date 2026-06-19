@@ -9,9 +9,12 @@ async function fetchAllInstagramMedia(accessToken) {
 
   while (nextUrl) {
     const response = await fetch(nextUrl);
-    if (!response.ok) throw new Error("Erro ao buscar mídia do Instagram");
-
     const data = await response.json();
+    if (!response.ok) {
+      throw new Error(
+        `Erro ao buscar mídia do Instagram: ${data.error?.message || response.status}`,
+      );
+    }
 
     const items = data.data.map((item) => ({
       id: item.id,
@@ -40,9 +43,12 @@ export default async function handler(req, res) {
       ),
     ]);
 
-    if (!profileResponse.ok)
-      throw new Error("Erro ao buscar perfil do Instagram");
     const profileRaw = await profileResponse.json();
+    if (!profileResponse.ok) {
+      throw new Error(
+        `Erro ao buscar perfil do Instagram: ${profileRaw.error?.message || profileResponse.status}`,
+      );
+    }
 
     const result = {
       media: allMedia,
