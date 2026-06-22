@@ -5,7 +5,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import { Suspense, lazy } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { Analytics } from "@vercel/analytics/react";
 import { InstagramProvider } from "./context/InstagramContext";
 import { YoutubeProvider } from "./context/YoutubeContext";
