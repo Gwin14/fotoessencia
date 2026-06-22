@@ -1,7 +1,7 @@
-import argentina1 from "../assets/image/argentina1.jpg";
-import argentina2 from "../assets/image/argentina2.jpg";
-import gaivota from "../assets/image/gaivota.jpg";
-import praiaGuarda from "../assets/image/praiaGuarda.jpg";
+import argentina1 from "../assets/image/argentina1.webp";
+import argentina2 from "../assets/image/argentina2.webp";
+import gaivota from "../assets/image/gaivota.webp";
+import praiaGuarda from "../assets/image/praiaGuarda.webp";
 
 export const items = [
   {
