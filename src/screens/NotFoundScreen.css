@@ -1,0 +1,53 @@
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  padding: 0 1rem;
+}
+
+.not-found-image {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 50px;
+  margin-bottom: 1.5rem;
+}
+
+.not-found-code {
+  font-family: "Rubik Mono One", sans-serif;
+  font-size: 6rem;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.not-found-text {
+  font-size: 0.5rem;
+  margin: -10px 0px 10px 0px;
+  font-family: "Rubik Mono One", sans-serif;
+}
+
+.not-found-link {
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  border-radius: 999px;
+  padding: 0.6rem 1.6rem;
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+  background-color: white;
+}
+
+.not-found-link:hover {
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+
+@media (max-width: 600px) {
+  .not-found-code {
+    font-size: 4rem;
+  }
+}

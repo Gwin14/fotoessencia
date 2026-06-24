@@ -531,6 +531,10 @@ class App {
     window.addEventListener("touchstart", this.boundOnTouchDown);
     window.addEventListener("touchmove", this.boundOnTouchMove);
     window.addEventListener("touchend", this.boundOnTouchUp);
+    if (typeof ResizeObserver !== "undefined") {
+      this.resizeObserver = new ResizeObserver(this.boundOnResize);
+      this.resizeObserver.observe(this.container);
+    }
   }
   destroy() {
     window.cancelAnimationFrame(this.raf);
@@ -543,6 +547,9 @@ class App {
     window.removeEventListener("touchstart", this.boundOnTouchDown);
     window.removeEventListener("touchmove", this.boundOnTouchMove);
     window.removeEventListener("touchend", this.boundOnTouchUp);
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+    }
     if (
       this.renderer &&
       this.renderer.gl &&

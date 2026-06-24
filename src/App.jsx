@@ -24,6 +24,7 @@ const ActivityScreen = lazy(() => import("./screens/ActivityScreen"));
 const NewsletterPostScreen = lazy(() =>
   import("./screens/NewsletterPostScreen")
 );
+const NotFoundScreen = lazy(() => import("./screens/NotFoundScreen"));
 
 const pageVariants = {
   initial: { opacity: 0, y: 30 },
@@ -54,8 +55,8 @@ function AnimatedRoutes() {
       mode="wait"
       onExitComplete={() => window.scrollTo({ top: 0 })}
     >
-      <Suspense fallback={null}>
-        <Routes location={location} key={location.pathname}>
+      <Suspense fallback={null} key={location.pathname}>
+        <Routes location={location}>
         <Route
           path="/"
           element={
@@ -102,6 +103,15 @@ function AnimatedRoutes() {
           element={
             <Page>
               <NewsletterPostScreen />
+            </Page>
+          }
+        />
+
+        <Route
+          path="*"
+          element={
+            <Page>
+              <NotFoundScreen />
             </Page>
           }
         />
