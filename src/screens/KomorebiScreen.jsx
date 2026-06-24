@@ -3,9 +3,9 @@ import "./KomorebiScreen.css";
 import BlurText from "../components/BlurText";
 import { FaApple, FaGooglePlay } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
-import iconeKomorebi from "../assets/image/iconeKomorebi.png";
-import videoKomorebi from "../assets/video/video.MP4";
-import mockupTriple from "../assets/mockupTriple.png";
+import iconeKomorebi from "../assets/image/iconeKomorebi.webp";
+import videoKomorebi from "../assets/video/video.mp4";
+import mockupTriple from "../assets/mockupTriple.webp";
 
 export default function KomorebiScreen() {
   return (

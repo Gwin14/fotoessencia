@@ -19,7 +19,7 @@ export default defineConfig({
       output: {
         manualChunks: {
           "react-vendor": ["react", "react-dom"],
-          "motion-vendor": ["framer-motion", "motion"],
+          "motion-vendor": ["motion"],
           "gsap-vendor": ["gsap", "@gsap/react"],
           "ogl-vendor": ["ogl"],
         },
@@ -31,7 +31,6 @@ export default defineConfig({
     include: [
       "react",
       "react-dom",
-      "framer-motion",
       "motion",
       "gsap",
       "@gsap/react",

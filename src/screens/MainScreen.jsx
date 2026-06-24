@@ -14,7 +14,7 @@ import { FaInstagram, FaFacebook, FaEnvelope } from "react-icons/fa";
 import { SiThreads } from "react-icons/si";
 
 import "./MainScreen.css";
-import barcoCapa from "../assets/image/barcoCapa.jpg";
+import barcoCapa from "../assets/image/barcoCapa.webp";
 
 // Lazy load dos componentes pesados
 const ChromaGrid = React.lazy(() => import("../components/ChromaGrid"));

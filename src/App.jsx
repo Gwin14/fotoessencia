@@ -4,7 +4,8 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { Suspense, lazy } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { Analytics } from "@vercel/analytics/react";
 import { InstagramProvider } from "./context/InstagramContext";
 import { YoutubeProvider } from "./context/YoutubeContext";
@@ -12,14 +13,17 @@ import { YoutubeProvider } from "./context/YoutubeContext";
 import ClickSpark from "./components/ClickSpark";
 import Squares from "./components/Squares";
 import Header from "./components/Header";
-import MainScreen from "./screens/MainScreen";
-import WIPScreen from "./screens/WIPScreen";
-import GaleryScreen from "./screens/GaleryScreen";
-import KomorebiScreen from "./screens/KomorebiScreen";
-import ActivityScreen from "./screens/ActivityScreen";
-import NewsletterPostScreen from "./screens/NewsletterPostScreen";
 
 import { HelmetProvider } from "react-helmet-async";
+
+const MainScreen = lazy(() => import("./screens/MainScreen"));
+const WIPScreen = lazy(() => import("./screens/WIPScreen"));
+const GaleryScreen = lazy(() => import("./screens/GaleryScreen"));
+const KomorebiScreen = lazy(() => import("./screens/KomorebiScreen"));
+const ActivityScreen = lazy(() => import("./screens/ActivityScreen"));
+const NewsletterPostScreen = lazy(() =>
+  import("./screens/NewsletterPostScreen")
+);
 
 const pageVariants = {
   initial: { opacity: 0, y: 30 },
@@ -50,7 +54,8 @@ function AnimatedRoutes() {
       mode="wait"
       onExitComplete={() => window.scrollTo({ top: 0 })}
     >
-      <Routes location={location} key={location.pathname}>
+      <Suspense fallback={null}>
+        <Routes location={location} key={location.pathname}>
         <Route
           path="/"
           element={
@@ -101,6 +106,7 @@ function AnimatedRoutes() {
           }
         />
       </Routes>
+      </Suspense>
     </AnimatePresence>
   );
 }

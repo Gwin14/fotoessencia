@@ -3,13 +3,12 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useYoutube } from "../context/YoutubeContext";
 import { useInstagram } from "../context/InstagramContext";
 import React, { useState, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import Carousel from "../components/Carousel";
 import BlurText from "../components/BlurText";
 import SpotlightCard from "../components/SpotlightCard";
 import NewsletterCard from "../components/NewsletterCard";
 import { formatDate } from "../utils/newsletterUtils";
-import { p } from "framer-motion/client";
 import { Helmet } from "react-helmet-async";
 
 const pageVariants = {
