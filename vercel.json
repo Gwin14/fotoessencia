@@ -1,4 +1,9 @@
 {
+  "functions": {
+    "api/img-proxy.js": {
+      "maxDuration": 15
+    }
+  },
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/(.*)", "destination": "/index.html" }
