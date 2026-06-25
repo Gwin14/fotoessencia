@@ -39,13 +39,13 @@ export default function GaleryScreen() {
         {media && media.length > 0 ? (
           <div className="gallery-grid">
             {media.map((item, idx) => (
-              <div className="galery-item">
+              <div className="galery-item" key={item.id}>
                 {item.media_type === "VIDEO" ? (
                   <video
-                    key={item.id}
                     src={item.media_url}
+                    poster={item.thumbnail_url || undefined}
                     controls
-                    loading="lazy"
+                    preload="none"
                     style={{
                       width: "100%",
                       height: "100%",
@@ -55,9 +55,12 @@ export default function GaleryScreen() {
                   />
                 ) : (
                   <img
-                    key={item.id}
-                    src={item.thumbnail_url || item.media_url}
-                    alt={`Instagram ${idx}`}
+                    src={item.thumb || item.media_url}
+                    alt={
+                      item.caption
+                        ? item.caption.slice(0, 80)
+                        : `Foto do Instagram ${idx + 1}`
+                    }
                     loading="lazy"
                     onClick={() => setSelectedImage(item)}
                     style={{
@@ -92,8 +95,12 @@ export default function GaleryScreen() {
               </span> */}
               <img
                 className="modal-image"
-                src={selectedImage.media_url}
-                alt={selectedImage.title}
+                src={selectedImage.full || selectedImage.media_url}
+                alt={
+                  selectedImage.caption
+                    ? selectedImage.caption.slice(0, 80)
+                    : "Foto do Instagram"
+                }
               />
               <p className="modal-caption">{selectedImage.caption}</p>
             </div>

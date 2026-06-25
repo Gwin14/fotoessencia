@@ -3,6 +3,13 @@ const INSTAGRAM_MEDIA_URL =
 const INSTAGRAM_PROFILE_URL =
   "https://graph.facebook.com/v22.0/17841468246347845";
 
+// Gera uma URL apontando para o proxy de imagem (/api/img-proxy), que
+// redimensiona e converte para WebP antes de chegar ao navegador.
+function proxied(url, width, quality = 75) {
+  if (!url) return null;
+  return `/api/img-proxy?url=${encodeURIComponent(url)}&w=${width}&q=${quality}`;
+}
+
 async function fetchAllInstagramMedia(accessToken) {
   let allItems = [];
   let nextUrl = `${INSTAGRAM_MEDIA_URL}?fields=id,caption,media_url,media_type,thumbnail_url&access_token=${accessToken}&limit=100`;
@@ -20,9 +27,18 @@ async function fetchAllInstagramMedia(accessToken) {
       id: item.id,
       caption: item.caption,
       media_type: item.media_type,
-      display_url: item.thumbnail_url || item.media_url,
+      is_video: item.media_type === "VIDEO",
+      // tamanho pequeno (grid, trail)
+      thumb: proxied(item.thumbnail_url || item.media_url, 400),
+      // tamanho médio (modal / visualização ampliada)
+      full: proxied(item.media_url, 1200, 80),
+      display_url: proxied(item.thumbnail_url || item.media_url, 400),
+      // mantém a URL original só para vídeo (não dá pra processar com sharp)
       media_url: item.media_url,
-      thumbnail_url: item.thumbnail_url ?? null,
+      // poster do vídeo já otimizado (quando o Instagram fornece thumbnail)
+      thumbnail_url: item.thumbnail_url
+        ? proxied(item.thumbnail_url, 400)
+        : null,
     }));
 
     allItems.push(...items);
@@ -52,9 +68,10 @@ export default async function handler(req, res) {
 
     const result = {
       media: allMedia,
-      images: allMedia.map((i) => i.media_url),
+      // trail usa miniaturas leves (400px) em vez do media_url cheio
+      images: allMedia.map((i) => i.thumb).filter(Boolean),
       profileInfo: {
-        profilePicture: profileRaw.profile_picture_url,
+        profilePicture: proxied(profileRaw.profile_picture_url, 300),
         bio: profileRaw.biography,
         followers: profileRaw.followers_count,
         mediaCount: profileRaw.media_count,

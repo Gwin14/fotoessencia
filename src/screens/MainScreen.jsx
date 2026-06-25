@@ -107,25 +107,31 @@ export default function MainScreen() {
               href="https://www.instagram.com/fotoessencia_/"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Instagram da Foto Essência"
             >
-              <FaInstagram size={24} color="#E4405F" />
+              <FaInstagram size={24} color="#E4405F" aria-hidden="true" />
             </a>
             <a
               href="https://www.facebook.com/profile.php?id=61565194861450/"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Facebook da Foto Essência"
             >
-              <FaFacebook size={24} color="#1877F2" />
+              <FaFacebook size={24} color="#1877F2" aria-hidden="true" />
             </a>
             <a
               href="https://www.threads.net/@fotoessencia_/"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Threads da Foto Essência"
             >
-              <SiThreads size={24} color="#000" />
+              <SiThreads size={24} color="#000" aria-hidden="true" />
             </a>
-            <a href="mailto:fotoessencia10@gmail.com">
-              <FaEnvelope size={24} color="#FF405F" />
+            <a
+              href="mailto:fotoessencia10@gmail.com"
+              aria-label="Enviar e-mail para a Foto Essência"
+            >
+              <FaEnvelope size={24} color="#FF405F" aria-hidden="true" />
             </a>
           </div>
         </div>
@@ -228,6 +234,7 @@ export default function MainScreen() {
           <div className="gallery-grid">
             {media.map((item, idx) => (
               <div
+                key={item.id}
                 className="galery-item"
                 style={{
                   width: "100%",
@@ -238,8 +245,9 @@ export default function MainScreen() {
                 {item.media_type === "VIDEO" ? (
                   <video
                     src={item.media_url}
+                    poster={item.thumbnail_url || undefined}
                     controls
-                    loading="lazy"
+                    preload="none"
                     style={{
                       width: "100%",
                       height: "100%",
@@ -249,8 +257,12 @@ export default function MainScreen() {
                   />
                 ) : (
                   <img
-                    src={item.thumbnail_url || item.media_url}
-                    alt={`Instagram ${idx}`}
+                    src={item.thumb || item.media_url}
+                    alt={
+                      item.caption
+                        ? item.caption.slice(0, 80)
+                        : `Foto do Instagram ${idx + 1}`
+                    }
                     loading="lazy"
                     style={{
                       width: "100%",
